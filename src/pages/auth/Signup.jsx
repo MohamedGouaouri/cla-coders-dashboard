@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import codeImage from '../../assets/coding.png'
 import { Link } from 'react-router-dom';
+import { useSignupMutation } from '../../api/coders.api';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SignupPage = () => {
+  const [signup] = useSignupMutation()
+  const [signupStatus, setStatus] = useState({
+    error: null,
+    isLoading: false
+  })
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,10 +26,37 @@ const SignupPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission, e.g., send data to server
     console.log('Form submitted:', formData);
+    setStatus({
+      error: null,
+      isLoading: true,
+    })
+    try{
+      
+      const signupResult = await signup(formData)
+      if(signupResult.error) {
+        return setStatus({
+          error: signupResult.error,
+          isLoading: false,
+        })
+      }
+      if (signupResult.data.status == 'success') {
+        return setStatus({
+          error: null,
+          isLoading: false,
+        })
+      }
+    } catch(error) {
+      return setStatus({
+        error: error,
+        isLoading: false,
+      })
+    }
+    
+    
   };
 
   return (
@@ -81,7 +116,9 @@ const SignupPage = () => {
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
             Sign Up
           </button>
-          <span className='text-black'>Already have an account?. <Link to='/login'>Login</Link> </span>
+          <div className='text-black'>Already have an account?. <Link to='/login'>Login</Link> </div>
+          {signupStatus.isLoading ? <CircularProgress />: <></>}
+          {signupStatus.error ? <span className='text-red-500'>Error while signing up</span> : <></>}
         </form>
       </div>
     </div>

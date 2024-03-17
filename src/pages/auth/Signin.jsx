@@ -1,8 +1,15 @@
 import { useState } from 'react';
 import codeImage from '../../assets/coding.png'
 import { Link } from 'react-router-dom';
+import { useLoginMutation } from '../../api/coders.api';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const SigninPage = () => {
+  const [login] = useLoginMutation()
+  const [loginStatus, setStatus] = useState({
+    error: null,
+    isLoading: false
+  })
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,10 +23,35 @@ const SigninPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission, e.g., send data to server
     console.log('Form submitted:', formData);
+    setStatus({
+      error: null,
+      isLoading: true,
+    })
+    try{
+      
+      const loginResult = await login(formData)
+      if(loginResult.error) {
+        return setStatus({
+          error: loginResult.error,
+          isLoading: false,
+        })
+      }
+      if (loginResult.data.status == 'success') {
+        return setStatus({
+          error: null,
+          isLoading: false,
+        })
+      }
+    } catch(error) {
+      return setStatus({
+        error: error,
+        isLoading: false,
+      })
+    }
   };
 
   return (
@@ -60,7 +92,9 @@ const SigninPage = () => {
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
             Login
           </button>
-          <span className='text-black'>New to CodeCLA. <Link to={"/signup"}>Signup</Link> </span>
+          <div className='text-black'>New to CodeCLA. <Link to={"/signup"}>Signup</Link> </div>
+          {loginStatus.isLoading ? <CircularProgress />: <></>}
+          {loginStatus.error ? <span className='text-red-500'>Error while signing in</span> : <></>}
         </form>
       </div>
     </div>
