@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import daisyui from 'daisyui'
+
 export default {
   content: [
     "./index.html",
@@ -10,9 +12,12 @@ export default {
         mainBody: '#23155B',
         textPrimary: '#8053FF',
         grayLight: '#817d8e',
+      },
+      height: {
+        '200': '200px',
       }
     },
   },
-  plugins: [],
+  plugins: [daisyui],
 }
 
