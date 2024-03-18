@@ -2,6 +2,7 @@
 The first two pages that you are asked to develop are signin and signup pages.
 In these assignments, we recommend you create a react application using Vite which can be looked up [here](https://vitejs.dev/),  and intialize it with tailwind css.
 For the file structure, you are free to go with any structure you want but we recommend the following structure:
+
 ![structure](./images/structure.png)
 
 - In the pages folder, we put code files related to the pages
