@@ -2,9 +2,11 @@ import { configureStore } from '@reduxjs/toolkit'
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { codersApi } from '../api/coders.api'
+import { workspaceSlice } from './slices/workspace.slice'
 
 export const store = configureStore({
   reducer: {
+    'workspace': workspaceSlice.reducer,
     // Add the generated reducer as a specific top-level slice
     [codersApi.reducerPath]: codersApi.reducer,
   },

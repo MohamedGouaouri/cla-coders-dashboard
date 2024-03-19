@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const ChallengesList = () => {
     return (
         <div className="overflow-scroll shadow-md bg-gray-100 rounded-lg p-4">
@@ -18,7 +20,8 @@ export const ChallengesList = () => {
                         <td className="px-4 py-2">
                             <span className="badge badge-success">Completed</span>
                         </td>
-                        <td className="px-4 py-2">Zemlak, Daniel and Leannon</td>
+                        {/* TODO: Chanege this to real id */}
+                        <Link to={'/workspace/0'} className="px-4 py-2">Zemlak, Daniel and Leannon</Link>
                         <td className="px-4 py-2">Data structure</td>
                         <td className="px-4 py-2">
                             <span className="badge badge-error">Hard</span>

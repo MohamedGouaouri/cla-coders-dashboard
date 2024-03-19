@@ -20,8 +20,24 @@ A brute force approach involves iterating through the array and checking every p
 A brute force approach involves iterating through the array and checking every pair of elements to see if their sum equals the target. However, this approach would have a time complexity of O(n^2). A more efficient approach involves using a hash table (or dictionary in Python) to store the indices of the elements as we iterate through the array. This way, we can check if the complement of the current element (target - current element) exists in the hash table in constant time, reducing the time complexity to O(n)
 `, // md content,
 
-difficulty: 'easy',
-        category: 'arrays',
+    difficulty: 'easy',
+    category: 'arrays',
+    tests: [
+        {
+            id: 'test_1',
+            input: {},
+            inputText: `[1, 2, 3]`,
+            output: {},
+            outputText: `6`
+        },
+        {
+            id: 'test_2',
+            input: {},
+            inputText: `[2, 3]`,
+            output: {},
+            outputText: `5`
+        }
+    ]
     }
 ]
 

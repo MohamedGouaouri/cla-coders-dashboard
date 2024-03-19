@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Split from 'react-split'
 import CodeMirror from '@uiw/react-codemirror'
 // import { vscodeDark } from '@uiw/codemirror-theme-vscode'
@@ -7,14 +8,35 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select  from '@mui/material/Select';
 import { useState } from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import {useSelector, useDispatch} from 'react-redux'
+import clsx from 'clsx';
+import { changeFontSize, changeLanguage } from '../../redux/slices/workspace.slice';
 
-function Playground() {
+function Playground({challenge}) {
+  const dispatch = useDispatch()
+  const language = useSelector(state => state.workspace.language)
+  const fontSize = useSelector(state => state.workspace.fontSize)
 
-    const [language, setlanguage] = useState('js')
+  const [selectedTestCase, setSelectedTestCase] = useState(0)
 
   const handleChange = (event) => {
-    setlanguage(event.target.value);
+    dispatch(changeLanguage({
+        language: event.target.value
+    }))
   };
+
+  const handleFontChange = (event) => {
+    console.log(event.target.value)
+    dispatch(changeFontSize({
+        fontSize: event.target.value
+    }))
+  }
+
+  const handleCaseSelect = (idx) => {
+    setSelectedTestCase(idx)
+  }
+
 
   return (  <Split
             className='h-screen w-full text-black'
@@ -22,18 +44,35 @@ function Playground() {
             sizes={[60, 40]}
         >
             <div className='overflow-auto text-start h-full'>
-                {/*  */}
-                <div>
+                <div className='flex flex-row-reverse gap-2'>
+                    {/* Language select */}
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="language-select">Language</InputLabel>
                         <Select
-                        value={language}
-                        onChange={handleChange}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
+                            labelId='language-select'
+                            value={language}
+                            onChange={handleChange}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
                         >
-
                         <MenuItem value={'js'}>Javascript</MenuItem>
                         <MenuItem value={'py'}>Python</MenuItem>
+                        </Select>
+                    </FormControl>
+                    {/* Font select */}
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="font-select">Font size</InputLabel>
+                        <Select
+                            labelId='font-select'
+                            value={fontSize}
+                            onChange={handleFontChange}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value={16}>16</MenuItem>
+                            <MenuItem value={18}>18</MenuItem>
+                            <MenuItem value={20}>20</MenuItem>
+                            <MenuItem value={24}>24</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -41,7 +80,7 @@ function Playground() {
                     value='const a = 1;'
                     // theme={vscode}
                     extensions={language == 'py' ? [python()] : [javascript()]}
-                    style={{fontSize: '16px', height: '100%'}}
+                    style={{fontSize: `${fontSize}px`, height: '100%'}}
                     className='h-full'
                 />
             </div>
@@ -55,37 +94,34 @@ function Playground() {
 					</div>
                     {/* Test case select */}
 					<div className='flex'>
-                        <div className='mr-2 items-start mt-2'>
-								<div className='flex flex-wrap items-center gap-y-4'>
-									<div
-										className={`text-black bg-slate-200 hover:bg-textPrimary hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap`}
-									>
-										Case 1
-									</div>
-								</div>
-						</div>
-
-                        <div className='mr-2 items-start mt-2'>
-								<div className='flex flex-wrap items-center gap-y-4'>
-									<div
-										className={`text-black bg-slate-200 hover:bg-textPrimary hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap`}
-									>
-										Case 2
-									</div>
-								</div>
-						</div>
+                        {challenge ? challenge.tests?.map((_, idx) => {
+                            return <div key={idx} className='mr-2 items-start mt-2'>
+                                <div className='flex flex-wrap items-center gap-y-4'>
+                                    <div
+                                        className={clsx(selectedTestCase == idx ? 'bg-textPrimary text-white' : 'bg-slate-200 text-black','hover:bg-textPrimary hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap')}
+                                        
+                                        onClick={() => handleCaseSelect(idx)}
+                                    >
+                                        Case {idx+1}
+                                    </div>
+                                </div>
+                            </div>
+                        }) : <></>}
 
 					</div>
                     {/* Test case (input and output) */}
 					<div className='font-semibold my-4 text-start'>
-						<p className='text-sm font-medium mt-4 text-black text-start'>Input:</p>
-						<div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
-                        Input text
-						</div>
-						<p className='text-sm font-medium mt-4 text-black'>Output:</p>
-						<div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
-                            outputText
-						</div>
+						{challenge && challenge.tests ? <>
+                        
+                            <p className='text-sm font-medium mt-4 text-black text-start'>Input:</p>
+                                <div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
+                                    {challenge.tests[selectedTestCase].inputText}
+                                </div>
+                                <p className='text-sm font-medium mt-4 text-black'>Expected output:</p>
+                                <div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
+                                {challenge.tests[selectedTestCase].outputText}
+                            </div>
+                        </> : <></>}
 					</div>
                     {/* Submit btn */}
                     <div className='flex flex-row-reverse flex-wrap items-center gap-y-4'>
