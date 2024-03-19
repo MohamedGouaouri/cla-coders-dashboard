@@ -3,6 +3,8 @@ import { ChallengesList } from "../../components/Challenges";
 import { Navbar } from "../../components/Navbar"
 import { TopKCodersList } from "../../components/Topk";
 import { TrendingCategoriesBox } from "../../components/TrendingCategories";
+import challenges from "../../data/challenges";
+import Workspace from "../workspace/Workspace";
 
 
 export const Home = () => {
@@ -11,9 +13,9 @@ export const Home = () => {
     return (
         <div className="h-screen w-screen overflow-scroll bg-slate-100">
             <Navbar />
-            <div className="min-h-full w-full p-2">
+            <div className="p-2">
                 
-                <div className="grid grid-cols-4 gap-2 h-full overflow-scroll">
+                {/* <div className="grid grid-cols-4 gap-2 h-full overflow-scroll">
                     <div className="col-span-3">
                     <h1 className="text-black text-start text-5xl my-5">Challenges</h1>
                     <h3 className="text-black text-start">Select category</h3>
@@ -24,7 +26,8 @@ export const Home = () => {
                         <TrendingCategoriesBox />
                         <TopKCodersList />
                     </div>
-                </div>
+                </div> */}
+                <Workspace challenge={challenges[0]}/>
             </div>
         </div>
     );

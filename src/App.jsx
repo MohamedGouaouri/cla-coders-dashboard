@@ -3,6 +3,8 @@ import SigninPage from './pages/auth/Signin';
 import SignupPage from './pages/auth/Signup'
 import { Routes, Route } from "react-router-dom";
 import { Home } from './pages/home/Home';
+import Workspace from './pages/workspace/Workspace';
+import challenges from './data/challenges';
 
 function App() {
 
@@ -14,6 +16,7 @@ function App() {
         <Route path='/signup' element={<SignupPage />}/>
         <Route path='/login' element={<SigninPage />}/>
       </Routes>
+      
     </>
   )
 }
