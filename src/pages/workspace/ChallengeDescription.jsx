@@ -3,7 +3,6 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 import { BsCheck2Circle } from "react-icons/bs";
 function ChallengeDescription({challenge}) {
   // TODO: Load data from server
-  const completed = true;
   return (
     <div className="flex flex-col h-full text-black overflow-scroll">
         <div className='flex items-center justify-between mx-2'>

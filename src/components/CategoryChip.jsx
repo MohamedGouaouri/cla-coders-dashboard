@@ -12,7 +12,7 @@ export const TrendingCategoryChip = ({category, n_submissions}) => {
 
 export const Chip = ({ label }) => {
     return (
-        <div className="inline-block bg-gray-200 px-3 py-2 rounded-full text-sm font-semibold text-gray-700 m-1 hover:bg-textPrimary hover:text-white hover:cursor-pointer">
+        <div className="bg-gray-200 px-3 py-2 rounded-full text-sm font-semibold text-gray-700 m-1 hover:bg-textPrimary hover:text-white hover:cursor-pointer">
             {label}
         </div>
     );
