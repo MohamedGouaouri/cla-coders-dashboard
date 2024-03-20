@@ -146,3 +146,9 @@ Here's the set of tasks to develop the UI for home page
     indicating its rank, its name and it score
 
 ![Topk](./images/topk.png)
+
+### 2) Update the router
+As a last step, make sure to layout these components in a page component named `Home`, which is the index page for the app. We can access via two links paths: `/` and `/challenges`.
+
+
+Happy coding! :)
