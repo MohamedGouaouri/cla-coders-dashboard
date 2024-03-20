@@ -7,8 +7,7 @@ import challenges from '../../data/challenges';
 import { Navbar } from '../../components/Navbar';
 function Workspace({challenge}) {
   const {id} = useParams()
-  console.log(id)
-  // TODO: Fetch challenge
+  // TODO: Fetch challenge later
   challenge = challenges[id]
   return <div className="h-screen w-screen overflow-scroll bg-slate-100">
             <Navbar />
