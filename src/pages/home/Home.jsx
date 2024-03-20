@@ -11,7 +11,6 @@ export const Home = () => {
         <div className="h-screen w-screen overflow-scroll bg-slate-100">
             <Navbar />
             <div className="p-2">
-                
                 <div className="grid grid-cols-4 gap-2 h-full overflow-scroll">
                     <div className="col-span-3">
                     <h1 className="text-black text-start text-5xl my-5">Challenges</h1>
@@ -24,7 +23,6 @@ export const Home = () => {
                         <TopKCodersList />
                     </div>
                 </div>
-                {/* <Workspace challenge={challenges[0]}/> */}
             </div>
         </div>
     );
