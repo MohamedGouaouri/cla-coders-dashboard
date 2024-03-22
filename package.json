@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.14",
     "@ramonak/react-progress-bar": "^5.2.0",
     "@reduxjs/toolkit": "^2.2.1",
+    "@theme-toggles/react": "^4.1.0",
     "@uiw/codemirror-theme-vscode": "^4.21.24",
     "@uiw/react-codemirror": "^4.21.24",
     "@uiw/react-heat-map": "^2.2.2",

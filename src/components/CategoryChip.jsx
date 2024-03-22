@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 
+import { useGetCategoriesQuery } from "../api/coders.api";
+
 
 export const TrendingCategoryChip = ({category, n_submissions}) => {
     return <div className="flex items-center content-between gap-1 bg-gray-200 px-3 py-2 rounded-full text-sm font-semibold text-gray-700 m-1 hover:bg-textPrimary hover:text-white hover:cursor-pointer">
@@ -19,11 +21,12 @@ export const Chip = ({ label }) => {
 };
 
 
-export const ChipsList = ({ categories }) => {
+export const ChipsList = () => {
+    const {data} = useGetCategoriesQuery()
     return (
         <div className="flex max-w-screen-md py-5 my-2 overflow-scroll whitespace-nowrap">
-            {categories.map((chip, index) => (
-                <Chip key={index} label={chip} />
+            {data && data.map((chip, index) => (
+                <Chip key={index} label={chip.name} />
             ))}
         </div>
     );

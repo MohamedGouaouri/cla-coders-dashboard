@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { useState } from "react";
+import {useSelector } from 'react-redux'
+import clsx from "clsx";
 
 function Leaderboard() {
 
@@ -13,14 +15,30 @@ function Leaderboard() {
   const handlePrevPage = () => {
     page > 1 && setPage(page-1)
   }
+  const theme = useSelector(state => {
+    return state.ui.theme
+})
+const isDark = theme != 'light'
   return (
-    <div className="h-screen w-screen overflow-scroll bg-slate-100">
+    <div className="h-screen w-screen overflow-scroll">
         <Navbar />
-        <div className="overflow-scroll shadow-md bg-gray-100 rounded-lg p-4">
-          <h1 className="text-black text-start font-bold text-3xl my-4">Leaderboard</h1>
-          <table className="table-auto w-full text-gray-800">
+        <div 
+          className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
+          <div className="flex justify-between items-center">
+            <h1 className="text-inherit text-start font-bold text-3xl my-4">Leaderboard</h1>
+            <div className="join m-2">
+                  <button 
+                    onClick={handlePrevPage}
+                    className="join-item btn bg-slate-100 text-black hover:bg-textPrimary hover:text-white">«</button>
+                  <button className="join-item btn bg-slate-100 text-black hover:bg-textPrimary hover:text-white">Page {page}</button>
+                  <button 
+                    onClick={handleNextPage}
+                    className="join-item btn bg-slate-100 text-black hover:bg-textPrimary hover:text-white">»</button>
+            </div>
+          </div>
+          <table className="table-auto w-full dark:bg-bgCardDark shadow-md rounded-md">
               {/* head */}
-              <thead className="bg-gray-200 text-center">
+              <thead className="text-inherit text-center">
                   <tr>
                       <th className="px-4 py-2">Rank</th>
                       <th className="px-4 py-2">Name</th>
@@ -64,17 +82,7 @@ function Leaderboard() {
           </table>
           
       </div>
-      <div className="flex flex-row-reverse">
-        <div className="join m-2">
-              <button 
-                onClick={handlePrevPage}
-                className="join-item btn bg-slate-100 text-black hover:bg-textPrimary hover:text-white">«</button>
-              <button className="join-item btn bg-slate-100 text-black hover:bg-textPrimary hover:text-white">Page {page}</button>
-              <button 
-                onClick={handleNextPage}
-                className="join-item btn bg-slate-100 text-black hover:bg-textPrimary hover:text-white">»</button>
-        </div>
-      </div>
+
     </div>
     
 );

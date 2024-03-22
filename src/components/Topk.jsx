@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 
 import { Link } from "react-router-dom";
-import TopKIcon from "./Icons/TopKIcon";
+import clsx from "clsx";
 
 
-export const TopKCoderCard = ({coder, rank}) => {
+export const TopKCoderCard = ({theme, coder}) => {
     const { firstName, lastName, avatarUrl, score } = coder;
-
+    const isDark = theme != 'light'
     return (
         // TODO: Add link to user
-        <Link className="flex w-full items-center p-2 bg-gray-100 rounded-lg shadow-md mb-2 text-black">
+        <Link className={clsx(isDark ? 'dark' : '', "flex w-full items-center p-2 bg-gray-100 rounded-lg shadow-md mb-2 text-black dark:bg-bgUserDark dark:text-white")}>
             <div className="mr-4">
                 {avatarUrl ? (
                     <img src={avatarUrl} className="w-10 h-10 rounded-full" />
@@ -18,17 +18,14 @@ export const TopKCoderCard = ({coder, rank}) => {
                 )}
             </div>
             <div className="flex w-full items-center justify-between">
-                <div className="flex gap-1 items-center">
-                    <TopKIcon rank={rank}/>
-                    <h3 className="text-lg font-semibold">{`${firstName} ${lastName}`}</h3>
-                </div>
-                <p className="text-gray-600">Score: {score}</p>
+                <h3 className="text-lg font-semibold">{`${firstName} ${lastName}`}</h3>
+                <p className={clsx(isDark ? 'dark' : '', 'text-gray-600 dark:text-white')}>Score: {score}</p>
             </div>
         </Link>
     );
 }
 
-export const TopKCodersList = () => {
+export const TopKCodersList = ({theme}) => {
     const topk = [
         {
             id: 101,
@@ -64,13 +61,13 @@ export const TopKCodersList = () => {
             rank: 4
         }
     ];
-    
+    const isDark = theme != 'light'
     return (
-        <div className="bg-gray-100 p-4 rounded-lg shadow-md overflow-scroll">
-            <h2 className="text-black text-2xl font-semibold mb-2">Top 4 coders</h2>
+        <div className={clsx(isDark ? 'dark': '', "text-black overflow-scroll p-4 rounded-lg shadow-md dark:bg-bgCardDark dark:text-white")}>
+            <h2 className="text-2xl font-semibold mb-2">Top 4 coders</h2>
             <div className="flex flex-wrap max-h-96 overflow-scroll">
                 {topk.map((coder, idx) => {
-                    return <TopKCoderCard key={idx} coder={coder} rank={coder.rank}/>
+                    return <TopKCoderCard key={idx} coder={coder} rank={coder.rank} theme={theme}/>
                 })}
             </div>
         </div>

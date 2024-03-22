@@ -1,0 +1,107 @@
+{
+    "challenges": [
+        {
+          "id": 123,
+          "status": "Completed",
+          "title": "Two-sum",
+          "description": "### Problem Statement: Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`. You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order. ### Example: Input: `nums = [2,7,11,15]`, `target = 9` Output: `[0,1]` Explanation: `nums[0] + nums[1] = 2 + 7 = 9`, so the answer is `[0,1]`. ### Constraints: - `2 <= nums.length <= 10^4` - `-10^9 <= nums[i] <= 10^9` - `-10^9 <= target <= 10^9` - Only one valid answer exists. ### Approach: A brute force approach involves iterating through the array and checking every pair of elements to see if their sum equals the target. However, this approach would have a time complexity of O(n^2). A more efficient approach involves using a hash table (or dictionary in Python) to store the indices of the elements as we iterate through the array. This way, we can check if the complement of the current element (target - current element) exists in the hash table in constant time, reducing the time complexity to O(n). A brute force approach involves iterating through the array and checking every pair of elements to see if their sum equals the target. However, this approach would have a time complexity of O(n^2). A more efficient approach involves using a hash table (or dictionary in Python) to store the indices of the elements as we iterate through the array. This way, we can check if the complement of the current element (target - current element) exists in the hash table in constant time, reducing the time complexity to O(n)",
+          "difficulty": "Easy",
+          "category": "arrays",
+          "solutionRate": "45%",
+          "tests": [
+            {
+              "id": "test_1",
+              "input": {},
+              "inputText": "[1, 2, 3]",
+              "output": {},
+              "outputText": "6"
+            },
+            {
+              "id": "test_2",
+              "input": {},
+              "inputText": "[2, 3]",
+              "output": {},
+              "outputText": "5"
+            }
+          ]
+        },
+        {
+            "id": 1234,
+          "status": "Completed",
+          "title": "Binary Tree Maximum Path Sum",
+          "category": "Data structure",
+          "description": "`### Problem Statement: Given a binary tree, find the maximum path sum. The path may start and end at any node in the tree, and the path must contain at least one node. ### Example: Consider the following binary tree: The maximum path sum is 6, which is the sum of the path [2,1,3]. ### Constraints: - The number of nodes in the tree is in the range [1, 3 * 10^4]. - -1000 <= Node.val <= 1000 ### Approach: A typical recursive approach involves traversing the tree in a depth-first manner while keeping track of the maximum path sum encountered so far. At each node, we calculate the maximum path sum starting from that node as the sum of the node's value plus the maximum path sum of its left and right subtrees (if they contribute positively). Additionally, we keep track of the maximum path sum across all nodes, which may not necessarily pass through the root. ### Implementation: To implement this, we can define a recursive function that takes a node as input and returns the maximum path sum starting from that node. We can then recursively call this function on the left and right children of the current node, and update the maximum path sum if necessary. Finally, we return the maximum path sum across all nodes as the result.",
+          "difficulty": "Hard",
+          "solutionRate": "55%",
+          "tests": [
+            {
+              "id": "test_1",
+              "input": {},
+              "inputText": "[1, 2, 3]",
+              "output": {},
+              "outputText": "6"
+            },
+            {
+              "id": "test_2",
+              "input": {},
+              "inputText": "[2, 3]",
+              "output": {},
+              "outputText": "5"
+            }
+          ]
+        },
+        {
+            "id": 12345,
+          "status": "Not started",
+          "title": "Merge Intervals",
+          "category": "Data structure",
+          "description": "### Problem Statement: Given a collection of intervals, merge all overlapping intervals. ### Example: Consider the following intervals:  ### Constraints: - The input list of intervals is non-empty. - Each interval `[a, b]` satisfies `a <= b`. ### Approach: A common approach to solve this problem is to first sort the intervals based on their start times. Then, we can iterate through the sorted intervals and merge overlapping intervals by comparing their start and end times. We maintain a current interval and merge it with the next interval if they overlap, updating the end time of the current interval accordingly. If the next interval does not overlap, we add the current interval to the result and start a new current interval.  ### Implementation: To implement this, we can start by sorting the intervals based on their start times. Then, we iterate through the sorted intervals and merge them according to the approach described above. Finally, we return the list of merged intervals as the result.",
+          "difficulty": "Moderate",
+          "solutionRate": "35%",
+          "tests": [
+            {
+              "id": "test_1",
+              "input": {},
+              "inputText": "[1, 2, 3]",
+              "output": {},
+              "outputText": "6"
+            },
+            {
+              "id": "test_2",
+              "input": {},
+              "inputText": "[2, 3]",
+              "output": {},
+              "outputText": "5"
+            }
+          ]
+        },
+        {
+            "id": 123456,
+          "status": "Attempted",
+          "title": "Find Minimum in Rotated Sorted Array",
+          "category": "Algorithms",
+          "description":"### Problem Statement: Given a collection of intervals, merge all overlapping intervals. ### Example: Consider the following intervals:  ### Constraints: - The input list of intervals is non-empty. - Each interval `[a, b]` satisfies `a <= b`. ### Approach: A common approach to solve this problem is to first sort the intervals based on their start times. Then, we can iterate through the sorted intervals and merge overlapping intervals by comparing their start and end times. We maintain a current interval and merge it with the next interval if they overlap, updating the end time of the current interval accordingly. If the next interval does not overlap, we add the current interval to the result and start a new current interval.  ### Implementation: To implement this, we can start by sorting the intervals based on their start times. Then, we iterate through the sorted intervals and merge them according to the approach described above. Finally, we return the list of merged intervals as the result.",
+          "difficulty": "Moderate",
+          "solutionRate": "60%",
+          "tests": [
+            {
+              "id": "test_1",
+              "input": {},
+              "inputText": "[1, 2, 3]",
+              "output": {},
+              "outputText": "6"
+            },
+            {
+              "id": "test_2",
+              "input": {},
+              "inputText": "[2, 3]",
+              "output": {},
+              "outputText": "5"
+            }
+          ]
+        }
+      ],
+    "categories": [{
+        "name": "All"
+    }, {"name": "Data structure"}, {"name": "Graphs"}, {"name": "Databases"}]
+}

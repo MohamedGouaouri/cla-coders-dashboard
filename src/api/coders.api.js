@@ -3,12 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const codersApi = createApi({
     reducerPath: 'coders',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://127.0.0.1:3000/users',
+        baseUrl: 'http://127.0.0.1:3000',
     }),
     endpoints: (builder) => ({
-        getCoders: builder.query({
-            query: () => '/'
-        }),
         login: builder.mutation({
             query: (data) => ({
                 url: '/login',
@@ -22,9 +19,24 @@ export const codersApi = createApi({
                 method: 'POST',
                 body: data,
             })
+        }),
+        getCategories: builder.query({
+            query: () => '/categories'
+        }),
+        getChallenges: builder.query({
+            query: () => '/challenges'
+        }),
+        getChallengeById: builder.query({
+            query: (id) => `/challenges?id=${id || 0}`
         })
     })
 })
 
 
-export const { useGetCodersQuery, useLoginMutation, useSignupMutation } = codersApi
+export const { 
+    useGetCategoriesQuery, 
+    useGetChallengesQuery,
+    useGetChallengeByIdQuery,
+    useLoginMutation, 
+    useSignupMutation 
+} = codersApi
