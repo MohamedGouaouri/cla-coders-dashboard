@@ -16,7 +16,7 @@ export default {
         bgMainDark: '#4322c9a3',
         bgCardDark: '#4322c9',
         bgUserDark: '#6a45ff',
-
+        bgCodeDark: '#1e1e1e',
 
         mainBody: '#23155B',
         textPrimary: '#8053FF',

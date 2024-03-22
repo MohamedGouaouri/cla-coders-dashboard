@@ -3,6 +3,8 @@ import { Navbar } from "../../components/Navbar";
 import CoderHeatMap from "../../components/CoderHeatMap";
 import CoderStats from "../../components/CoderStats";
 import ProfileForm from "../../components/ProfileForm";
+import {useSelector } from 'react-redux'
+import clsx from "clsx";
 
 
 
@@ -26,17 +28,22 @@ function Profile() {
     avatarUrl: "",
   }
 
+  const theme = useSelector(state => {
+    return state.ui.theme
+})
+const isDark = theme != 'light'
+
   return (
-    <div className="h-screen overflow-scroll bg-slate-100">
+    <div className={clsx(isDark ? 'dark':'', "p-2 w-screen h-screen text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
         <Navbar />
-        <div className="w-full h-full text-black grid grid-cols-1 lg:grid-cols-3">
+        <div className="w-full h-full grid grid-cols-1 lg:grid-cols-3">
 
           <div className="col-span-1 lg:col-span-2 p-4 h-full">
             <ProfileForm coder={coder}/>
           </div>
-          <div className="col-span-1 lg:col-span-1 p-4 h-full">
-            <CoderStats stats={{easy: 60, moderate: 20, hard: 2}}/>
-            <CoderHeatMap values={values}/>
+          <div className="col-span-1 lg:col-span-1 p-4 h-full flex flex-col gap-3">
+            <CoderStats stats={{easy: 60, moderate: 20, hard: 2}} theme={theme}/>
+            <CoderHeatMap values={values} theme={theme}/>
           </div>
         </div>
     </div>

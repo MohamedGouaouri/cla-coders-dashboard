@@ -5,14 +5,20 @@ import Playground from './Playground'
 import { useParams } from 'react-router-dom';
 import { Navbar } from '../../components/Navbar';
 import { useGetChallengeByIdQuery } from '../../api/coders.api';
+import {useSelector } from 'react-redux'
+import clsx from 'clsx';
 
 
 function Workspace() {
   const {id} = useParams()
   const {data} = useGetChallengeByIdQuery(id)
-  return <div className="h-screen w-screen overflow-scroll bg-slate-100">
+  const theme = useSelector(state => {
+        return state.ui.theme
+    })
+    const isDark = theme != 'light'
+  return <div className="h-screen w-screen overflow-scroll">
             <Navbar />
-            <div className="p-2">
+            <div className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
                     {data && <Split
                         minSize={200}
                         expandToMin={false}
@@ -22,9 +28,9 @@ function Workspace() {
                         dragInterval={1}
                         direction="horizontal"
                         cursor="col-resize"
-                        className='split text-white'
+                        className={clsx(isDark ? 'dark':'', 'split text-black dark:text-white')}
                     >
-                        <ChallengeDescription challenge={data[0]} />
+                        <ChallengeDescription theme={theme} challenge={data[0]} />
                         <Playground challenge={data[0]}/>
                         
                     </Split>}

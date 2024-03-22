@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import Split from 'react-split'
 import CodeMirror from '@uiw/react-codemirror'
-// import { vscodeDark } from '@uiw/codemirror-theme-vscode'
+import { vscodeDark } from '@uiw/codemirror-theme-vscode'
 import {javascript} from '@codemirror/lang-javascript'
 import {python} from '@codemirror/lang-python'
 import MenuItem from '@mui/material/MenuItem';
@@ -13,7 +13,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import clsx from 'clsx';
 import { changeFontSize, changeLanguage } from '../../redux/slices/workspace.slice';
 
-function Playground({challenge}) {
+function Playground({theme, challenge}) {
+  const isDark = theme != 'light'
   const dispatch = useDispatch()
   const language = useSelector(state => state.workspace.language)
   const fontSize = useSelector(state => state.workspace.fontSize)
@@ -37,9 +38,10 @@ function Playground({challenge}) {
     setSelectedTestCase(idx)
   }
 
+  console.log(vscodeDark)
 
   return (  <Split
-            className='h-screen w-full text-black'
+            className='h-screen w-full text-inherit'
             direction='vertical'
             sizes={[60, 40]}
         >
@@ -53,7 +55,7 @@ function Playground({challenge}) {
                             value={language}
                             onChange={handleChange}
                             displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
+                            inputProps={{ 'aria-label': 'Without label', }}
                         >
                         <MenuItem value={'js'}>Javascript</MenuItem>
                         <MenuItem value={'py'}>Python</MenuItem>
@@ -76,20 +78,22 @@ function Playground({challenge}) {
                         </Select>
                     </FormControl>
                 </div>
+                <div className={clsx(isDark ? 'dark' : '', 'h-full dark:bg-bgCodeDark')}>
                 <CodeMirror 
                     value='const a = 1;'
-                    // theme={vscode}
+                    theme={isDark ? vscodeDark: null}
                     extensions={language == 'py' ? [python()] : [javascript()]}
                     style={{fontSize: `${fontSize}px`, height: '100%'}}
                     className='h-full'
                 />
+                </div>
             </div>
-            <div className='w-full px-5 overflow-auto'>
+            <div className='w-full px-5 overflow-auto text-inherit'>
 					{/* testcase heading */}
 					<div className='flex h-10 items-center space-x-6'>
 						<div className='relative flex h-full flex-col justify-center cursor-pointer'>
-							<div className='text-sm font-medium leading-5 text-black'>Testcases</div>
-							<hr className='absolute bottom-0 h-0.5 w-full rounded-full border-none bg-black' />
+							<div className='text-sm font-medium leading-5'>Testcases</div>
+							<hr className='absolute bottom-0 h-0.5 w-full rounded-full border-none' />
 						</div>
 					</div>
                     {/* Test case select */}
@@ -99,7 +103,6 @@ function Playground({challenge}) {
                                 <div className='flex flex-wrap items-center gap-y-4'>
                                     <div
                                         className={clsx(selectedTestCase == idx ? 'bg-textPrimary text-white' : 'bg-slate-200 text-black','hover:bg-textPrimary hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap')}
-                                        
                                         onClick={() => handleCaseSelect(idx)}
                                     >
                                         Case {idx+1}
@@ -113,11 +116,11 @@ function Playground({challenge}) {
 					<div className='font-semibold my-4 text-start'>
 						{challenge && challenge.tests ? <>
                         
-                            <p className='text-sm font-medium mt-4 text-black text-start'>Input:</p>
+                            <p className='text-sm font-medium mt-4 text-start'>Input:</p>
                                 <div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
                                     {challenge.tests[selectedTestCase].inputText}
                                 </div>
-                                <p className='text-sm font-medium mt-4 text-black'>Expected output:</p>
+                                <p className='text-sm font-medium mt-4 '>Expected output:</p>
                                 <div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
                                 {challenge.tests[selectedTestCase].outputText}
                             </div>
