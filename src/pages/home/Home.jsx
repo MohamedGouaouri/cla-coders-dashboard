@@ -11,14 +11,14 @@ export const Home = () => {
         <div className="h-screen w-screen overflow-scroll bg-slate-100">
             <Navbar />
             <div className="p-2">
-                <div className="grid grid-cols-4 gap-2 h-full overflow-scroll">
-                    <div className="col-span-3">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 h-full overflow-scroll">
+                    <div className="md:col-span-3">
                         <h1 className="text-black text-start text-5xl my-5">Challenges</h1>
                         <h3 className="text-black text-start">Select category</h3>
                         <ChipsList categories={chips} />
                         <ChallengesList />
                     </div>
-                    <div className="flex flex-col gap-4 bg-gray-100">
+                    <div className="md:col-span-1 flex flex-col gap-4 bg-gray-100">
                         <TrendingCategoriesBox />
                         <TopKCodersList />
                     </div>

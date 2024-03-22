@@ -17,7 +17,7 @@ function Leaderboard() {
     <div className="h-screen w-screen overflow-scroll bg-slate-100">
         <Navbar />
         <div className="overflow-scroll shadow-md bg-gray-100 rounded-lg p-4">
-          
+          <h1 className="text-black text-start font-bold text-3xl my-4">Leaderboard</h1>
           <table className="table-auto w-full text-gray-800">
               {/* head */}
               <thead className="bg-gray-200 text-center">
