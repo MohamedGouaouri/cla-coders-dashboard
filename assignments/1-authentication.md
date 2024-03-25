@@ -18,13 +18,10 @@ For the file structure, you are free to go with any structure you want but we re
 2. Develop the signin page UI
 ![signup](./images/signin.png)
 
-3. Setup react router and add routing logic between the signin and signup pages
+3. Setup react router and add routing logic between the signin and signup pages.
 
-4. Setup initial redux toolkit store and RTK query api for signin and signup. RTK query is a data fetching api developed by RTK team which is very powerfull and it can be integrated easily with redux
+4. Setup initial redux toolkit store where you store the authentication state to be used by you components.
 
-> **_NOTE1:_**  The fourth step is an optional step here, you can skip it now and add it later once you setup a real communication with your backend
+5. Create a `ProtectedRoute` component that makes sure that the user is authenticated before showing the request content. If the user is not authenticated he'll be redirected to the signin page.
 
-> **_NOTE2:_**  You are free to use any data fetching library, but we recommend RTK query
-
-
-5- Add form validation with [react hook form](https://react-hook-form.com/)
+6. Add form validation with [react hook form](https://react-hook-form.com/)
