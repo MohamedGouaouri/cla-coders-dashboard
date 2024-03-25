@@ -5,6 +5,8 @@ coders.
 ### Tasks
 - Create a leaderboard page that contains a table with the following information: `Rank`, `Name` which is the concatenation of the `first name` and `last name`, `Score` and lastly the `Solved challenges` which indicates the number of solved challenges.
 
+![Leaderboard](./images/leaderboard.png)
+
 You can use the following dummy data:
 ```json
 [

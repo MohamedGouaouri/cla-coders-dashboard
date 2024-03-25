@@ -36,8 +36,7 @@ const isDark = theme != 'light'
   return (
     <div className={clsx(isDark ? 'dark':'', "w-screen h-screen text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
         <Navbar />
-        <div className="p-2 grid grid-cols-1 lg:grid-cols-3">
-
+        <div className="p-2 grid grid-cols-1 lg:grid-cols-3 bg-inherit">
           <div className="col-span-1 lg:col-span-2 p-4">
             <ProfileForm coder={coder}/>
           </div>
