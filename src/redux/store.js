@@ -4,11 +4,13 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { codersApi } from '../api/coders.api'
 import { workspaceSlice } from './slices/workspace.slice'
 import { uiSlice } from './slices/ui.slice'
+import { authSlice } from './slices/auth.slice'
 
 export const store = configureStore({
   reducer: {
     'workspace': workspaceSlice.reducer,
     'ui': uiSlice.reducer,
+    'auth': authSlice.reducer,
     // Add the generated reducer as a specific top-level slice
     [codersApi.reducerPath]: codersApi.reducer,
   },

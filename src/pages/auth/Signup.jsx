@@ -8,11 +8,12 @@ const SignupPage = () => {
   const [signup] = useSignupMutation()
   const [signupStatus, setStatus] = useState({
     error: null,
+    success: null,
     isLoading: false
   })
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
   });
@@ -38,6 +39,7 @@ const SignupPage = () => {
       
       const signupResult = await signup(formData)
       if(signupResult.error) {
+        console.log(signupResult.error)
         return setStatus({
           error: signupResult.error,
           isLoading: false,
@@ -47,16 +49,17 @@ const SignupPage = () => {
         return setStatus({
           error: null,
           isLoading: false,
+          success: true,
         })
       }
     } catch(error) {
+      console.log(error)
       return setStatus({
         error: error,
         isLoading: false,
+        success: null,
       })
     }
-    
-    
   };
 
   return (
@@ -76,21 +79,23 @@ const SignupPage = () => {
           <div className="mb-4">
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               onChange={handleChange}
               placeholder="First Name"
               className="py-3 px-4 block w-full text-white bg-mainBody border-gray-200 rounded-lg text-sm"
+              required
             />
           </div>
           <div className="mb-4">
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleChange}
               placeholder="Last Name"
               className="py-3 px-4 block w-full text-white bg-mainBody border-gray-200 rounded-lg text-sm"
+              required
             />
           </div>
           <div className="mb-4">
@@ -101,6 +106,7 @@ const SignupPage = () => {
               onChange={handleChange}
               placeholder="Email"
               className="py-3 px-4 block w-full text-white bg-mainBody border-gray-200 rounded-lg text-sm"
+              required
             />
           </div>
           <div className="mb-4">
@@ -111,14 +117,17 @@ const SignupPage = () => {
               onChange={handleChange}
               placeholder="Password"
               className="py-3 px-4 block w-full text-white bg-mainBody border-gray-200 rounded-lg text-sm"
+              required
+              minLength={8}
             />
           </div>
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg">
             Sign Up
           </button>
-          <div className='text-black'>Already have an account?. <Link to='/login'>Login</Link> </div>
+          <div className='text-black'>Already have an account?. <Link to='/login' className='text-textPrimary'>Login</Link> </div>
           {signupStatus.isLoading ? <CircularProgress />: <></>}
-          {signupStatus.error ? <span className='text-red-500'>Error while signing up</span> : <></>}
+          {signupStatus.error ? <span className='text-red-500'>Error while signing up: {`${signupStatus.error?.data?.message}`}</span> : <></>}
+          {signupStatus.success ? <span className='text-green-500'>Signup success</span> : <></>}
         </form>
       </div>
     </div>
