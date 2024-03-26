@@ -19,11 +19,16 @@ function Playground({theme, challenge}) {
   const language = useSelector(state => state.workspace.language)
   const fontSize = useSelector(state => state.workspace.fontSize)
   const [selectedTestCase, setSelectedTestCase] = useState(0)
-  console.log(theme)
   const getChallengeCodeText = (language) => {
-    const codeText = challenge.code.code_text.find((text) => text.language === language)
-    if (!codeText) return ''
-    return codeText.text
+      let code_text = challenge.code.code_text
+      let code
+      if(challenge.submission && challenge.submission.code.language == language) {
+        code = challenge.submission.code
+    }else {
+        code = code_text.find((text) => text.language === language)
+    }
+    if (!code) return ''
+    return code.text
   }
 
   const codeRef = useRef({

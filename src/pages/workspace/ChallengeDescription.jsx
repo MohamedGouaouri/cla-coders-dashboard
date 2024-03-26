@@ -15,7 +15,7 @@ function ChallengeDescription({theme, challenge}) {
         <div className='flex items-center justify-between mx-2'>
           <div className='text-4xl'>{challenge.title}</div>
           <div className='flex gap-2 items-center'>
-            <div className={difficultyBadgeStyle}>{challenge.difficulty}</div>
+            <div className={difficultyBadgeStyle}>{challenge.level}</div>
             <Tooltip title={challenge.status}>
               <span>{challenge.status == 'Completed' ? <BsCheck2Circle size={28} color="#2aeb34"/> : challenge.status == 'Attempted' ? <LuFileSpreadsheet size={28} color={"#036bfc"}/> : <FaRegHourglass size={28} color={"#fc9003"}/>}</span>
             </Tooltip>
