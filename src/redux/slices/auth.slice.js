@@ -10,9 +10,10 @@ export const authSlice = createSlice({
             state.token = action.payload.token
             localStorage.setItem('token', state.token)
         },
-        logout: (state) => [
-
-        ]
+        logout: (state) => {
+            state.token = null
+            localStorage.removeItem('token')
+        }
     }
 })
 
