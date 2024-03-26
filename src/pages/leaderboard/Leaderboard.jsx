@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { useSelector } from 'react-redux';
 import clsx from "clsx";
+import { useGetLeaderboardQuery } from "../../api/grading.api";
+import useAuth from "../../hooks/useAuth";
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Leaderboard() {
 
@@ -11,6 +14,9 @@ function Leaderboard() {
     return state.ui.theme
   })
   const isDark = theme !== 'light';
+
+  const {token} = useAuth()
+  const {data, isLoading, isSuccess} = useGetLeaderboardQuery(token)
 
   return (
     <div className="h-screen w-screen overflow-scroll">
@@ -30,34 +36,30 @@ function Leaderboard() {
                   </tr>
               </thead>
               <tbody>
-                  {/* rows */}
-                  <tr className="border-b border-gray-300">
-                      <td className="px-4 py-2 flex justify-center">
-                          1
-                      </td>
-                      <td><Link to={'/workspace/0'} className="px-4 py-2">John Doe</Link></td>
-                      <td className="px-4 py-2">400</td>
-                      <td className="px-4 py-2">150</td>
-                  </tr>
-
-                  <tr className="border-b border-gray-300">
-                      <td className="px-4 py-2 flex justify-center">
-                          2
-                      </td>
-                      <td><Link to={'/workspace/1'} className="px-4 py-2">Alice Smith</Link></td>
-                      <td className="px-4 py-2">350</td>
-                      <td className="px-4 py-2">140</td>
-                  </tr>
-
-                  <tr className="border-b border-gray-300">
-                      <td className="px-4 py-2 flex justify-center">
-                          3
-                      </td>
-                      <td><Link to={'/workspace/2'} className="px-4 py-2">Emma Johnson</Link></td>
-                      <td className="px-4 py-2">320</td>
-                      <td className="px-4 py-2">135</td>
-                  </tr>
-              </tbody>
+                    {isLoading ? <tr>
+                        <td colSpan="5" className="px-4 py-2 m-auto">
+                            <CircularProgress />
+                        </td>
+                    </tr>
+                    : isSuccess ? 
+                    data.data.map((coder, idx) => {
+                        return <tr 
+                            key={idx}
+                            className="border-b border-gray-300">
+                            <td className="px-4 py-2 flex justify-center">
+                                {coder.rank}
+                            </td>
+                            <td><div className="px-4 py-2">{coder.first_name} {coder.last_name}</div></td>
+                            <td className="px-4 py-2">{coder.score}</td>
+                            <td className="px-4 py-2">{coder.solved_challenges}</td>
+                        </tr>
+                    }) : <tr>
+                        
+                        <td colSpan="5" className="px-4 py-2 m-auto text-red-500">
+                            Error loading data
+                        </td>
+                </tr>}
+                </tbody>
           </table>
           
       </div>

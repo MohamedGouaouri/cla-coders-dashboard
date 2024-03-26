@@ -15,12 +15,20 @@ export const gradingApi = createApi({
                 }
             })
         }),
-        
+        getLeaderboard: builder.query({
+            query: (token) => ({
+                url: `/api/grading/leaderboard`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        }),
         
     })
 })
 
 
 export const { 
-    useGetTopKQuery
+    useGetTopKQuery,
+    useGetLeaderboardQuery
 } = gradingApi

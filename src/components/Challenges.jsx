@@ -9,13 +9,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useGetChallengesQuery } from "../api/challenges.api";
 import clsx from "clsx";
 import useAuth from "../hooks/useAuth";
-
+import {useSelector} from 'react-redux';
 
 export const ChallengesList = ({theme}) => {
     const isDark = theme != 'light'
     const {token} = useAuth()
-    const {data, isLoading, isSuccess} = useGetChallengesQuery(token)
-    console.log(data)
+    const selectedCategory = useSelector(state => state.ui.selectedCategory)
+    console.log(selectedCategory)
+    let {data, isLoading, isSuccess} = useGetChallengesQuery({
+        token, 
+        selectedCategory
+    })
+    
     return (
         <div className={clsx(isDark ? 'dark': '', "text-black overflow-scroll shadow-md bg-inherit rounded-lg p-4 text-inherit dark:bg-bgCardDark dark:text-white")}>
             <table className="table-auto w-full">
@@ -31,6 +36,7 @@ export const ChallengesList = ({theme}) => {
                 </thead>
                 <tbody>
                     {isLoading ? <tr>
+                        
                         <td colSpan="5" className="px-4 py-2 m-auto">
                             <CircularProgress />
                         </td>
@@ -53,7 +59,12 @@ export const ChallengesList = ({theme}) => {
                                 </td>
                                 <td className="px-4 py-2">{challenge.solution_rate}</td>
                             </tr>
-                    }) : <div></div>}
+                    }) : <tr>
+                        
+                        <td colSpan="5" className="px-4 py-2 m-auto text-red-500">
+                            Error loading data
+                        </td>
+                </tr>}
                 </tbody>
             </table>
         </div>
