@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
-import { useGetCategoriesQuery } from "../api/coders.api";
+import { useGetCategoriesQuery } from "../api/challenges.api";
+import useAuth from "../hooks/useAuth";
 
 
 export const TrendingCategoryChip = ({category, n_submissions}) => {
@@ -12,7 +13,7 @@ export const TrendingCategoryChip = ({category, n_submissions}) => {
     </div>
 }
 
-export const Chip = ({ label }) => {
+export const CategoryChip = ({ label }) => {
     return (
         <div className="bg-gray-200 px-3 py-2 rounded-full text-sm font-semibold text-gray-700 m-1 hover:bg-textPrimary hover:text-white hover:cursor-pointer">
             {label}
@@ -21,13 +22,15 @@ export const Chip = ({ label }) => {
 };
 
 
-export const ChipsList = () => {
-    const {data} = useGetCategoriesQuery()
+export const CategoriesList = () => {
+    const {token} = useAuth()
+    const {data, isSuccess, isLoading, isError} = useGetCategoriesQuery(token)
+    console.log(data)
     return (
         <div className="flex max-w-screen-md py-5 my-2 overflow-scroll whitespace-nowrap">
-            {data && data.map((chip, index) => (
-                <Chip key={index} label={chip.name} />
-            ))}
+            {isLoading ? <>Loading</> : isSuccess ? data && data.data.map((cat, index) => (
+        <CategoryChip key={index} label={cat} />
+    )): isError ? <div>Error loading categories</div> : <></>}
         </div>
     );
 };

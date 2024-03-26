@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import codeImage from '../../assets/coding.png'
 import { Link } from 'react-router-dom';
-import { useLoginMutation } from '../../api/coders.api';
+import { useLoginMutation } from '../../api/auth.api';
 import CircularProgress from '@mui/material/CircularProgress';
 import {useDispatch} from 'react-redux'
 import { loginAction } from '../../redux/slices/auth.slice';

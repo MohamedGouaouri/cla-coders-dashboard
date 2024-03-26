@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_BASE_URL } from './configs'
 
-export const codersApi = createApi({
-    reducerPath: 'coders',
+export const authApi = createApi({
+    reducerPath: 'api/auth',
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
     }),
@@ -21,23 +21,11 @@ export const codersApi = createApi({
                 body: data,
             })
         }),
-        getCategories: builder.query({
-            query: () => '/categories'
-        }),
-        getChallenges: builder.query({
-            query: () => '/challenges'
-        }),
-        getChallengeById: builder.query({
-            query: (id) => `/challenges?id=${id || 0}`
-        })
     })
 })
 
 
 export const { 
-    useGetCategoriesQuery, 
-    useGetChallengesQuery,
-    useGetChallengeByIdQuery,
     useLoginMutation, 
     useSignupMutation 
-} = codersApi
+} = authApi

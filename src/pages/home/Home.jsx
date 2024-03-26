@@ -1,10 +1,12 @@
 import clsx from "clsx";
-import { ChipsList } from "../../components/CategoryChip";
+import { CategoriesList } from "../../components/CategoryChip";
 import { ChallengesList } from "../../components/Challenges";
 import { Navbar } from "../../components/Navbar"
 import { TopKCodersList } from "../../components/Topk";
 import { TrendingCategoriesBox } from "../../components/TrendingCategories";
 import {useSelector } from 'react-redux'
+
+
 export const Home = () => {
     const theme = useSelector(state => {
         return state.ui.theme
@@ -18,7 +20,7 @@ export const Home = () => {
                     <div className="md:col-span-3">
                         <h1 className="text-start text-5xl my-5">Challenges</h1>
                         <h3 className="text-start">Select category</h3>
-                        <ChipsList />
+                        <CategoriesList />
                         <ChallengesList theme={theme}/>
                     </div>
                     <div className="md:col-span-1 flex flex-col gap-4 overflow-scroll">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import codeImage from '../../assets/coding.png'
 import { Link } from 'react-router-dom';
-import { useSignupMutation } from '../../api/coders.api';
+import { useSignupMutation } from '../../api/auth.api';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const SignupPage = () => {

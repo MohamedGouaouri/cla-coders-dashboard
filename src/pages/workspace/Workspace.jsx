@@ -4,7 +4,7 @@ import ChallengeDescription from './ChallengeDescription'
 import Playground from './Playground'
 import { useParams } from 'react-router-dom';
 import { Navbar } from '../../components/Navbar';
-import { useGetChallengeByIdQuery } from '../../api/coders.api';
+import { useGetChallengeByIdQuery } from '../../api/challenges.api';
 import {useSelector } from 'react-redux'
 import clsx from 'clsx';
 
