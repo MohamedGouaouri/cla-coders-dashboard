@@ -23,12 +23,22 @@ export const gradingApi = createApi({
                 }
             })
         }),
-        
+        sumbit: builder.mutation({
+            query: ({token, submission}) => ({
+                url: '/api/grading/submit',
+                method: 'POST',
+                body: submission,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        })
     })
 })
 
 
 export const { 
     useGetTopKQuery,
-    useGetLeaderboardQuery
+    useGetLeaderboardQuery,
+    useSumbitMutation,
 } = gradingApi

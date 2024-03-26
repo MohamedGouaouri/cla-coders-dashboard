@@ -12,13 +12,25 @@ import InputLabel from '@mui/material/InputLabel';
 import {useSelector, useDispatch} from 'react-redux'
 import clsx from 'clsx';
 import { changeFontSize, changeLanguage } from '../../redux/slices/workspace.slice';
+import { useSumbitMutation } from '../../api/grading.api'
+import useAuth from '../../hooks/useAuth'
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function Playground({theme, challenge}) {
   const isDark = theme != 'light'
   const dispatch = useDispatch()
+  const {token} = useAuth()
   const language = useSelector(state => state.workspace.language)
   const fontSize = useSelector(state => state.workspace.fontSize)
   const [selectedTestCase, setSelectedTestCase] = useState(0)
+  const [submissionStatus, setSubmissionStatus] = useState({
+    data: null,
+    error: null,
+    isLoading: false,
+  })
+
+  const [submit] = useSumbitMutation()
   const getChallengeCodeText = (language) => {
       let code_text = challenge.code.code_text
       let code
@@ -49,7 +61,6 @@ function Playground({theme, challenge}) {
   };
 
   const handleFontChange = (event) => {
-    console.log(event.target.value)
     dispatch(changeFontSize({
         fontSize: event.target.value
     }))
@@ -59,6 +70,37 @@ function Playground({theme, challenge}) {
     setSelectedTestCase(idx)
   }
 
+  const handleSubmit = async () => {
+    const submission = {
+        challenge_id: challenge._id,
+        lang: language,
+        code: codeRef.current[language]
+    }
+    try{
+        const submissionResult = await submit({token, submission})
+        if(submissionResult.error) {
+          return setSubmissionStatus({
+            error: submissionResult.error?.data?.message,
+            isLoading: false,
+          })
+        }
+        if (submissionResult.data.status == 'success') {
+          console.log(submissionResult.data)
+          return setSubmissionStatus({
+            error: null,
+            isLoading: false,
+            data: submissionResult.data
+          })
+
+        }
+      } catch(error) {
+        return setSubmissionStatus({
+          error: error.message,
+          isLoading: false,
+        })
+      }
+    await submit({token, submission})
+  }
 
 
   const getTestCaseInputText = (test) => {
@@ -70,6 +112,7 @@ function Playground({theme, challenge}) {
     // returns input text and output text of the testcase
     return test.output.toString();
   }
+
 
   return (  <Split
                 className='h-screen w-full text-inherit'
@@ -122,7 +165,31 @@ function Playground({theme, challenge}) {
             </div>
             <div className='w-full px-5 overflow-auto text-inherit'>
 					{/* testcase heading */}
-					<div className='flex h-10 items-center space-x-6'>
+				{submissionStatus.isLoading ? 
+                    <div className='h-full flex flex-col gap-2 items-center justify-center'>
+                        <CircularProgress />
+                    </div>
+                
+                 : 
+                    submissionStatus.error ? <div className='h-full flex flex-col gap-2 items-center justify-center text-orange-400'>
+                        <div
+                            className='text-2xl'
+                        >{submissionStatus.error}</div>
+                        <div
+                            onClick={() => {
+                                setSubmissionStatus({
+                                    error: null,
+                                    data: null,
+                                    isLoading: false,
+                                })
+                            }}
+
+                            className='text-black bg-slate-200 hover:bg-green-400 hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap'
+                        >Close</div>
+                    </div> : 
+                    submissionStatus.data ? <>Success!!</> : 
+                    <>
+                        <div className='flex h-10 items-center space-x-6'>
 						<div className='relative flex h-full flex-col justify-center cursor-pointer'>
 							<div className='text-sm font-medium leading-5'>Testcases</div>
 							<hr className='absolute bottom-0 h-0.5 w-full rounded-full border-none' />
@@ -161,12 +228,16 @@ function Playground({theme, challenge}) {
                     {/* Submit btn */}
                     <div className='flex flex-row-reverse flex-wrap items-center gap-y-4'>
 						<button
+                            onClick={handleSubmit}
 							className={`text-black bg-slate-200 hover:bg-textPrimary hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap`}
 						>
 							Submit
 						</button>
 					</div>
-				</div>
+                    </>
+
+                }
+			</div>
         </Split>
     // </div>
   )
