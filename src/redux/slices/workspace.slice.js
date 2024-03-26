@@ -12,7 +12,7 @@ export const workspaceSlice = createSlice({
         },
         changeLanguage: (state, action) => {
             state.language = action.payload && action.payload.language && ['py', 'js'].includes(action.payload.language) ? action.payload.language : 'js'
-        }
+        },
     }
 })
 

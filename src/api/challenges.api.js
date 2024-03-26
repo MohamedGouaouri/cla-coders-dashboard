@@ -41,7 +41,15 @@ export const challengesApi = createApi({
             
         // }),
         getChallengeById: builder.query({
-            query: (id) => `/api/challenges?id=${id || 0}`
+            query: ({token, id}) => {
+                return {
+                    url: `/api/challenges/${id}`,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+
+                }
+            }
         })
     })
 })

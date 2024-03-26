@@ -7,11 +7,13 @@ import { Navbar } from '../../components/Navbar';
 import { useGetChallengeByIdQuery } from '../../api/challenges.api';
 import {useSelector } from 'react-redux'
 import clsx from 'clsx';
+import useAuth from '../../hooks/useAuth';
 
 
 function Workspace() {
   const {id} = useParams()
-  const {data} = useGetChallengeByIdQuery(id)
+  const {token} = useAuth()
+  const {data, isLoading, isSuccess} = useGetChallengeByIdQuery({token, id})
   const theme = useSelector(state => {
         return state.ui.theme
     })
@@ -19,7 +21,9 @@ function Workspace() {
   return <div className="h-screen w-screen overflow-scroll">
             <Navbar />
             <div className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
-                    {data && <Split
+                    {/* {} */}
+                    {isLoading ? <div className='flex justify-center items-center h-full'>Preparing Workspace</div> : 
+                    isSuccess ? data && <Split
                         minSize={200}
                         expandToMin={false}
                         gutterSize={10}
@@ -30,11 +34,12 @@ function Workspace() {
                         cursor="col-resize"
                         className={clsx(isDark ? 'dark':'', 'split text-black dark:text-white')}
                     >
-                        <ChallengeDescription theme={theme} challenge={data[0]} />
-                        <Playground challenge={data[0]}/>
+                        <ChallengeDescription theme={theme} challenge={data.data} />
+                        <Playground challenge={data.data} theme={theme}/>
                         
-                    </Split>}
-                </div>
+                    </Split> : <>Error while loading challenge workspace</>
+                    }
+            </div>
         </div>
 }
 

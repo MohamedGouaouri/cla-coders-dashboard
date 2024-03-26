@@ -7,7 +7,7 @@ import {python} from '@codemirror/lang-python'
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select  from '@mui/material/Select';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import {useSelector, useDispatch} from 'react-redux'
 import clsx from 'clsx';
@@ -18,9 +18,25 @@ function Playground({theme, challenge}) {
   const dispatch = useDispatch()
   const language = useSelector(state => state.workspace.language)
   const fontSize = useSelector(state => state.workspace.fontSize)
-
   const [selectedTestCase, setSelectedTestCase] = useState(0)
+  console.log(theme)
+  const getChallengeCodeText = (language) => {
+    const codeText = challenge.code.code_text.find((text) => text.language === language)
+    if (!codeText) return ''
+    return codeText.text
+  }
 
+  const codeRef = useRef({
+    'py': getChallengeCodeText('py'),
+    'js': getChallengeCodeText('js')
+  })
+
+  const handleCodeChange = (newCode) => {
+    codeRef.current = {
+        ...codeRef.current,
+        [language]: newCode
+    }
+  }
   const handleChange = (event) => {
     dispatch(changeLanguage({
         language: event.target.value
@@ -38,13 +54,23 @@ function Playground({theme, challenge}) {
     setSelectedTestCase(idx)
   }
 
-  console.log(vscodeDark)
+
+
+  const getTestCaseInputText = (test) => {
+    // returns input text and output text of the testcase
+    const inputsText = test.inputs.map(input => `${input.name}=${input.value}`).join(', ');
+    return inputsText
+  }
+  const getTestCaseOutputText = (test) => {
+    // returns input text and output text of the testcase
+    return test.output.toString();
+  }
 
   return (  <Split
-            className='h-screen w-full text-inherit'
-            direction='vertical'
-            sizes={[60, 40]}
-        >
+                className='h-screen w-full text-inherit'
+                direction='vertical'
+                sizes={[60, 40]}
+            >
             <div className='overflow-auto text-start h-full'>
                 <div className='flex flex-row-reverse gap-2'>
                     {/* Language select */}
@@ -78,13 +104,14 @@ function Playground({theme, challenge}) {
                         </Select>
                     </FormControl>
                 </div>
-                <div className={clsx(isDark ? 'dark' : '', 'h-full dark:bg-bgCodeDark')}>
+                <div className={clsx(isDark ? 'dark' : '', 'h-full bg-white dark:bg-bgCodeDark')}>
                 <CodeMirror 
-                    value='const a = 1;'
-                    theme={isDark ? vscodeDark: null}
+                    value={codeRef.current[language]}
+                    theme={isDark ? vscodeDark: 'light'}
                     extensions={language == 'py' ? [python()] : [javascript()]}
                     style={{fontSize: `${fontSize}px`, height: '100%'}}
                     className='h-full'
+                    onChange={(value) => handleCodeChange(value)}
                 />
                 </div>
             </div>
@@ -118,11 +145,11 @@ function Playground({theme, challenge}) {
                         
                             <p className='text-sm font-medium mt-4 text-start'>Input:</p>
                                 <div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
-                                    {challenge.tests[selectedTestCase].inputText}
+                                    {getTestCaseInputText(challenge.tests[selectedTestCase])}
                                 </div>
                                 <p className='text-sm font-medium mt-4 '>Expected output:</p>
                                 <div className='w-full cursor-text rounded-lg border px-3 py-[10px] bg-dark-fill-3 border-transparent bg-slate-200 text-black mt-2'>
-                                {challenge.tests[selectedTestCase].outputText}
+                                {getTestCaseOutputText(challenge.tests[selectedTestCase])}
                             </div>
                         </> : <></>}
 					</div>
