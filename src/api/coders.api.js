@@ -15,10 +15,24 @@ export const codersApi = createApi({
                 },
             })
         }),
+        updateProfile: builder.mutation({
+            query: ({token, data}) => {
+                return {
+                    url: '/api/auth/coders/profile',
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    formData: true,
+                    body: data,
+                }
+            }
+        }),
     })
 })
 
 
 export const { 
-    useGetProfileQuery
+    useGetProfileQuery,
+    useUpdateProfileMutation,
 } = codersApi
