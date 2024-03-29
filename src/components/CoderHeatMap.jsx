@@ -30,7 +30,8 @@ function CoderHeatMap({theme}) {
   const {token} = useAuth()
   let {data, isError, isLoading, isSuccess} = useGetHeatMapQuery(token)
   const startDate = new Date();
-  startDate.setFullYear(startDate.getFullYear() - 1);
+  startDate.setMonth(startDate.getMonth() - 10);
+  console.log(startDate)
   const values = isSuccess && data ?
     data.data.map((heatmapData) => {
       return {
