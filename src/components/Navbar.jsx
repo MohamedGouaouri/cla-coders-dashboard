@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Classic } from "@theme-toggles/react"
 import { Link, useNavigate } from "react-router-dom";
 import {useSelector, useDispatch } from 'react-redux'
@@ -6,7 +7,7 @@ import { toggleTheme } from "../redux/slices/ui.slice";
 import clsx from "clsx";
 import { logoutAction } from "../redux/slices/auth.slice";
 
-export const Navbar = () => {
+export const Navbar = ({coder}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const theme = useSelector(state => {
@@ -29,10 +30,12 @@ const isLight = theme == 'light'
     <div className="flex-none">
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-          <div className="w-10 rounded-full">
-            <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            {coder && coder.avatar_url ? (
+              <img src={coder.avatar_url} className="w-12 h-12 rounded-full" alt="Avatar" />
+            ) : (
+              <div className="w-12 h-12 flex items-center justify-center bg-gray-300 rounded-full"></div>
+            )}
           </div>
-        </div>
         <ul tabIndex={0} className="bg-white menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow rounded-box w-52 dark:bg-bgNavDark dark:text-white">
           <li>
             <Link to={"/profile"} className="justify-between">

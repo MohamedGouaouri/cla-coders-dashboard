@@ -3,7 +3,6 @@ import Split from 'react-split'
 import ChallengeDescription from './ChallengeDescription'
 import Playground from './Playground'
 import { useParams } from 'react-router-dom';
-import { Navbar } from '../../components/Navbar';
 import { useGetChallengeByIdQuery } from '../../api/challenges.api';
 import {useSelector } from 'react-redux'
 import clsx from 'clsx';
@@ -18,9 +17,7 @@ function Workspace() {
         return state.ui.theme
     })
     const isDark = theme != 'light'
-  return <div className="h-screen w-screen overflow-scroll">
-            <Navbar />
-            <div className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
+  return <div className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
                     {/* {} */}
                     {isLoading ? <div className='flex justify-center items-center h-full'>Preparing Workspace</div> : 
                     isSuccess ? data && <Split
@@ -40,7 +37,6 @@ function Workspace() {
                     </Split> : <>Error while loading challenge workspace</>
                     }
             </div>
-        </div>
 }
 
 export default Workspace

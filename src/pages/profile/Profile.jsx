@@ -1,5 +1,3 @@
-import { Navbar } from "../../components/Navbar";
-
 import CoderHeatMap from "../../components/CoderHeatMap";
 import CoderStats from "../../components/CoderStats";
 import ProfileForm from "../../components/ProfileForm";
@@ -23,8 +21,7 @@ function Profile() {
 const isDark = theme != 'light'
 
   return (
-    <div className={clsx(isDark ? 'dark':'', "w-screen h-screen text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
-        <Navbar />
+    <div className={clsx(isDark ? 'dark':'', "w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
         <div className="p-2 grid grid-cols-1 lg:grid-cols-3 bg-inherit">
           <div className="col-span-1 lg:col-span-2 p-4">
             {isProfileLoading ? <Loading />: isProfileError ? <ErrorComponent message={'Error while loading data'}/>

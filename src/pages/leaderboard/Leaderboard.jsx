@@ -1,5 +1,4 @@
 // import { Link } from "react-router-dom";
-import { Navbar } from "../../components/Navbar";
 import { useSelector } from 'react-redux';
 import clsx from "clsx";
 import { useGetLeaderboardQuery } from "../../api/grading.api";
@@ -7,8 +6,6 @@ import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading";
 
 function Leaderboard() {
-
-  // TODO: Handle load data
 
   const theme = useSelector(state => {
     return state.ui.theme
@@ -19,8 +16,6 @@ function Leaderboard() {
   const {data, isLoading, isSuccess} = useGetLeaderboardQuery(token)
 
   return (
-    <div className="h-screen w-screen overflow-scroll">
-        <Navbar />
         <div 
           className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100  dark:bg-bgMainDark dark:text-white")}>
           <h1 className="text-inherit text-start font-bold text-3xl my-4">Leaderboard</h1>
@@ -63,8 +58,6 @@ function Leaderboard() {
           </table>
           
       </div>
-
-    </div>
     
   );
 }

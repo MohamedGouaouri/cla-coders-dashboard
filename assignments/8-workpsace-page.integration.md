@@ -10,7 +10,8 @@ Here's the list of tasks
 - First, add an endpoint to get a challenge by its id that should be passed to the query.
 - Don't forget to add the bearer token authorization header that should be passed to your query.
 - Export the hook for getting a specific challenge.
-- In your your workspace, invoke the challenge getter hook and render the data properly (Render the challenge descritpion and playground tests).
+- In your your workspace, get the challenge id from the URL.
+- Invoke the challenge getter hook and render the data properly (Render the challenge description and playground tests).
 - You should pass the token (fetched from the store) as parameter to the query (You can use your custom `useAuth` hook).
 - Similar to previous assignments, you should add the loading and error components to indicate the status of the operation.
 - As you know, the challenge data from backend contains intial code for different language (`py` and `js` in our case). So make sure to show the proper code based on the language dropdown selector.

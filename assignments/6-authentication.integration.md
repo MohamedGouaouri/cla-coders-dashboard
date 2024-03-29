@@ -44,3 +44,6 @@ Here's the list of tasks todo
 - Now, you should update your protected route to check of the availability of the token in the store.
 - We recommend you to create a custom hook that you can call `useAuht` which checks and retrieves the token from the store.
 
+
+
+>Tip: In integration tasks (frontend with backend), we always should manage the loading (the delay between the request and response), so it would be very useful to create a component called `<Loading />` that takes an optional `message` props and shows a circular progress bar and a that message on top of it, and make use of it everywhere. Simlarly, an `<ErrorComponent message={...}/>` that shows a red-colored text indicating the error that happened.

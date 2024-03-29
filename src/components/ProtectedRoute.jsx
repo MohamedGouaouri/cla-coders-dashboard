@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import {Navigate, useLocation, Outlet} from "react-router-dom"
 import useAuth from "../hooks/useAuth";
+import Layout from "./Layout";
 
 const ProtectedRoute = () => {
     const {isAuthenticated} = useAuth()
@@ -11,7 +12,7 @@ const ProtectedRoute = () => {
     if(!isAuthenticated) {
         return <Navigate to="/login" state={{ from: location}} replace />
     }
- return <Outlet />
+ return <Layout><Outlet /></Layout>
 
 };
 

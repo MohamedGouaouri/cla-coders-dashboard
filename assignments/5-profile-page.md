@@ -20,8 +20,13 @@ Here's the list of tasks
 ### 2) Implement profile form
 
 - Create a `ProfileForm` component that contains the form as shown in the previous picture.
-- For the avatar, once the user clicks on the edit icon, a file explorer opens up to select the image and it should be previewed on that circle.
-- Make sure that the mail is read-only field.
+- Make sure that the email is read-only field.
+- For the avatar, once the user clicks on the edit icon, a file explorer opens up to select the image and it should be previewed on that circle
+> Hint1: Their should an `onChange` handler for the edit input, the uploaded file data can be accessed via `event.target.files` which is an array, so must select the first file.
+
+> Hint2: In order to preview the file of that uploaded image, you can make use of `URL.createObjectURL()` and you pass the uploaded file to it, you can find more this [here](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static).
+
+
 
 ### 3) Implement statistics components
 On the right hand side of the page, we show general statistics about the coder's performance

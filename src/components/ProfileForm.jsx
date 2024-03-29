@@ -14,7 +14,8 @@ function ProfileForm({coder}) {
   const [updateProfile] = useUpdateProfileMutation()
   const [updateStatus, setStatus] = useState({
     error: null,
-    isLoading: false
+    isLoading: false,
+    data: null,
   })
   const avatar = uploadedAvatar == null ? coder.avatar_url : URL.createObjectURL(uploadedAvatar)
   const [formData, setFormData] = useState({
@@ -41,7 +42,7 @@ function ProfileForm({coder}) {
         fd.append(key, formData[key])
       }
       setStatus({
-        error: null,
+        ...updateStatus,
         isLoading: true,
       })
       
@@ -62,6 +63,7 @@ function ProfileForm({coder}) {
           setStatus({
             error: null,
             isLoading: false,
+            data: 'Profile updated successfully'
           })
         }
       } catch(error) {
@@ -154,7 +156,7 @@ function ProfileForm({coder}) {
                   </div>
                   {updateStatus.isLoading ? <Loading /> : updateStatus.error ? <ErrorComponent message={updateStatus.error}/> : 
                   
-                  <FadingSuccessMessage message={'Profile updated'}/>
+                  updateStatus.data && <FadingSuccessMessage message={updateStatus.data}/>
                   }
               </div>
     </>

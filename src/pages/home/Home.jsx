@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { CategoriesList } from "../../components/CategoryChip";
 import { ChallengesList } from "../../components/Challenges";
-import { Navbar } from "../../components/Navbar"
 import { TopKCodersList } from "../../components/Topk";
 import { TrendingCategoriesBox } from "../../components/TrendingCategories";
 import {useSelector } from 'react-redux'
@@ -13,8 +12,6 @@ export const Home = () => {
     })
     const isDark = theme != 'light'
     return (
-        <div className="h-screen w-screen overflow-scroll">
-            <Navbar />
             <div className={clsx(isDark ? 'dark':'', "p-2 w-full h-full text-black bg-slate-100 shadow-md dark:bg-bgMainDark dark:text-white")}>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 h-full overflow-scroll">
                     <div className="md:col-span-3">
@@ -29,6 +26,5 @@ export const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
