@@ -15,7 +15,6 @@ export const ChallengesList = ({theme}) => {
     const isDark = theme != 'light'
     const {token} = useAuth()
     const selectedCategory = useSelector(state => state.ui.selectedCategory)
-    console.log(selectedCategory)
     let {data, isLoading, isSuccess} = useGetChallengesQuery({
         token, 
         selectedCategory

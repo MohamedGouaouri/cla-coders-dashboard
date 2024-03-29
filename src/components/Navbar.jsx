@@ -1,18 +1,24 @@
 import { Classic } from "@theme-toggles/react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useSelector, useDispatch } from 'react-redux'
 import Logo from '../assets/logo.svg'
 import { toggleTheme } from "../redux/slices/ui.slice";
 import clsx from "clsx";
+import { logoutAction } from "../redux/slices/auth.slice";
 
 export const Navbar = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const theme = useSelector(state => {
     return state.ui.theme
 })
 const isLight = theme == 'light'
   const handleThemeToggle = () => {
     dispatch(toggleTheme())
+  }
+  const handleLogout = () => {
+    dispatch(logoutAction())
+    navigate('/signin')
   }
   return <div className={clsx(!isLight ? 'dark':'', "navbar text-black bg-slate-200 shadow-md dark:bg-bgNavDark dark:text-white")}>
     <div className="flex-1">
@@ -33,7 +39,7 @@ const isLight = theme == 'light'
               Profile
             </Link>
           </li>
-          <li><Link>Logout</Link></li>
+          <li><Link onClick={handleLogout}>Logout</Link></li>
         </ul>
       </div>
       <Classic toggled={!isLight} toggle={handleThemeToggle} duration={750}/>

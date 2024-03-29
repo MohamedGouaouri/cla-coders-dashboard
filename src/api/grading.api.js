@@ -32,7 +32,23 @@ export const gradingApi = createApi({
                     'Authorization': `Bearer ${token}`
                 }
             })
-        })
+        }),
+        getHeatMap: builder.query({
+            query: (token) => ({
+                url: `/api/grading/heatmap`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        }),
+        getCoderStats: builder.query({
+            query: (token) => ({
+                url: `/api/grading/stats`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+        }),
     })
 })
 
@@ -41,4 +57,6 @@ export const {
     useGetTopKQuery,
     useGetLeaderboardQuery,
     useSumbitMutation,
+    useGetHeatMapQuery,
+    useGetCoderStatsQuery,
 } = gradingApi

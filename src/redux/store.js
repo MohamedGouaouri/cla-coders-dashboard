@@ -7,6 +7,7 @@ import { workspaceSlice } from './slices/workspace.slice'
 import { uiSlice } from './slices/ui.slice'
 import { authSlice } from './slices/auth.slice'
 import { gradingApi } from '../api/grading.api'
+import { codersApi } from '../api/coders.api'
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [challengesApi.reducerPath]: challengesApi.reducer,
     [gradingApi.reducerPath]: gradingApi.reducer,
+    [codersApi.reducerPath]: codersApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
@@ -25,6 +27,7 @@ export const store = configureStore({
       .concat(authApi.middleware)
       .concat(challengesApi.middleware)
       .concat(gradingApi.middleware)
+      .concat(codersApi.middleware)
       ,
     
 })

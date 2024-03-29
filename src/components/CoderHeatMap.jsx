@@ -2,8 +2,12 @@
 import HeatMap from '@uiw/react-heat-map';
 import Tooltip from '@uiw/react-tooltip';
 import clsx from 'clsx';
+import useAuth from '../hooks/useAuth';
+import { useGetHeatMapQuery } from '../api/grading.api';
+import Loading from './Loading';
+import ErrorComponent from './Error';
 
-function CoderHeatMap({theme, values}) {
+function CoderHeatMap({theme}) {
   const isDark = theme != 'light'
   const pannelColor = {
     dark: {
@@ -23,25 +27,42 @@ function CoderHeatMap({theme, values}) {
       30: '#2f03ad',
     }
   }
+  const {token} = useAuth()
+  let {data, isError, isLoading, isSuccess} = useGetHeatMapQuery(token)
+  const startDate = new Date();
+  startDate.setFullYear(startDate.getFullYear() - 1);
+  const values = isSuccess && data ?
+    data.data.map((heatmapData) => {
+      return {
+        date: heatmapData.date,
+        count: heatmapData.count
+      }
+    })
+ : [];
+ console.log('VALUES: ', values)
   return (
     <div className={clsx(isDark ? 'dark': '', "text-black  p-4 rounded-lg shadow-md dark:bg-bgCardDark dark:text-white")}>
               <h1 className="text-3xl my-2">Your coding strikes</h1>
-              <HeatMap
-                value={values}
-                weekLabels={['', 'Mon', '', 'Wed', '', 'Fri ', '']}
-                startDate={new Date('2016/01/01')} // Start date will be today - year
-                style={{width: '100%', color: isDark ? 'white' : 'black'}}
-                panelColors={isDark ? pannelColor.dark : pannelColor.light}
-                rectRender={(props, data) => {
-                  // if (!data.count) return <rect {...props} />;
-                  return (
-                    <Tooltip placement="top" content={`${data.count || 0} Correct submissions`}>
-                      <rect {...props} />
-                    </Tooltip>
-                  );
-                }}
-              />
-            </div>
+             {
+              isLoading ? <Loading />: isError ? <ErrorComponent message={'Error while loading data'}/>: 
+
+              isSuccess && data &&  <HeatMap
+                  value={values}
+                  weekLabels={['', 'Mon', '', 'Wed', '', 'Fri ', '']}
+                  startDate={startDate} // Start date will be today - year
+                  style={{width: '100%', color: isDark ? 'white' : 'black'}}
+                  panelColors={isDark ? pannelColor.dark : pannelColor.light}
+                  rectRender={(props, data) => {
+                    // if (!data.count) return <rect {...props} />;
+                    return (
+                      <Tooltip placement="top" content={`${data.count || 0} Correct submissions`}>
+                        <rect {...props} />
+                      </Tooltip>
+                    );
+                  }}
+            />
+             }
+    </div>
   )
 }
 
