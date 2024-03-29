@@ -17,7 +17,7 @@ import useAuth from '../../hooks/useAuth'
 import Loading from '../../components/Loading'
 
 
-function Playground({theme, challenge}) {
+function Playground({theme, challenge, refetch}) {
   const isDark = theme != 'light'
   const dispatch = useDispatch()
   const {token} = useAuth()
@@ -90,12 +90,12 @@ function Playground({theme, challenge}) {
         }
         if (submissionResult.data.status == 'success') {
           console.log(submissionResult.data)
-          return setSubmissionStatus({
+          setSubmissionStatus({
             error: null,
             isLoading: false,
             data: submissionResult.data
           })
-
+          refetch()
         }
       } catch(error) {
         return setSubmissionStatus({
@@ -179,7 +179,7 @@ function Playground({theme, challenge}) {
 				{submissionStatus.isLoading ? 
                     <div className='h-full w-full flex justify-center items-center'><Loading message={'Please wait, we are grading your submission'}/></div>
                  : 
-                    submissionStatus.error ? <div className='h-full flex flex-col gap-2 items-center justify-center text-orange-400'>
+                    submissionStatus.error ? <div className='h-full flex flex-col gap-2 items-center justify-center text-red-500'>
                         <div
                             className='text-2xl'
                         >{submissionStatus.error}</div>

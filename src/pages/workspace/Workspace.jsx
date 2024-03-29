@@ -13,7 +13,7 @@ import useAuth from '../../hooks/useAuth';
 function Workspace() {
   const {id} = useParams()
   const {token} = useAuth()
-  const {data, isLoading, isSuccess} = useGetChallengeByIdQuery({token, id})
+  const {data, isLoading, isSuccess, refetch} = useGetChallengeByIdQuery({token, id})
   const theme = useSelector(state => {
         return state.ui.theme
     })
@@ -35,7 +35,7 @@ function Workspace() {
                         className={clsx(isDark ? 'dark':'', 'split text-black dark:text-white')}
                     >
                         <ChallengeDescription theme={theme} challenge={data.data} />
-                        <Playground challenge={data.data} theme={theme}/>
+                        <Playground challenge={data.data} theme={theme} refetch={refetch}/>
                         
                     </Split> : <>Error while loading challenge workspace</>
                     }
