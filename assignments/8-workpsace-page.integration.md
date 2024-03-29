@@ -37,3 +37,5 @@ In case testing passed
 If th coder submits an already solved challenge, he gets this
 ![grading submission](./images/integration/grading-existing.png)
 
+
+After you finish these tasks successfully, you'll end up with a fully functional coding workspace!.

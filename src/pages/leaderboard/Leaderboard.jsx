@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import clsx from "clsx";
 import { useGetLeaderboardQuery } from "../../api/grading.api";
 import useAuth from "../../hooks/useAuth";
-import CircularProgress from '@mui/material/CircularProgress';
+import Loading from "../../components/Loading";
 
 function Leaderboard() {
 
@@ -38,7 +38,7 @@ function Leaderboard() {
               <tbody>
                     {isLoading ? <tr>
                         <td colSpan="5" className="px-4 py-2 m-auto">
-                            <CircularProgress />
+                            <div className='h-full w-full flex justify-center items-center'><Loading message={'Loading leaderboard'}/></div>
                         </td>
                     </tr>
                     : isSuccess ? 
