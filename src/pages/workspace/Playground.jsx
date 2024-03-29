@@ -196,7 +196,7 @@ function Playground({theme, challenge, refetch}) {
                         >Close</div>
                     </div> : 
                     submissionStatus.data ? <div className='h-full flex flex-col justify-center items-center'>
-                    <p>{getSuccessMessage(submissionStatus.data)}</p>
+                    <p className='text-green-500'>{getSuccessMessage(submissionStatus.data)}</p>
                     <div
                             onClick={() => {
                                 setSubmissionStatus({
