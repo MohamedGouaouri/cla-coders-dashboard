@@ -14,7 +14,7 @@ import clsx from 'clsx';
 import { changeFontSize, changeLanguage } from '../../redux/slices/workspace.slice';
 import { useSumbitMutation } from '../../api/grading.api'
 import useAuth from '../../hooks/useAuth'
-import CircularProgress from '@mui/material/CircularProgress';
+import Loading from '../../components/Loading'
 
 
 function Playground({theme, challenge}) {
@@ -76,6 +76,10 @@ function Playground({theme, challenge}) {
         lang: language,
         code: codeRef.current[language]
     }
+    setSubmissionStatus({
+      ...submissionStatus,
+      isLoading: true,
+    })
     try{
         const submissionResult = await submit({token, submission})
         if(submissionResult.error) {
@@ -99,7 +103,6 @@ function Playground({theme, challenge}) {
           isLoading: false,
         })
       }
-    await submit({token, submission})
   }
 
 
@@ -111,6 +114,14 @@ function Playground({theme, challenge}) {
   const getTestCaseOutputText = (test) => {
     // returns input text and output text of the testcase
     return test.output.toString();
+  }
+
+  const getSuccessMessage = (gradingResponse) => {
+    if (gradingResponse.data.passed) {
+      return `Congratulations! Your score is ${gradingResponse.data.score}. You passed successfully.`;
+  } else {
+      return "Sorry, no success message available.";
+  }
   }
 
 
@@ -166,10 +177,7 @@ function Playground({theme, challenge}) {
             <div className='w-full px-5 overflow-auto text-inherit'>
 					{/* testcase heading */}
 				{submissionStatus.isLoading ? 
-                    <div className='h-full flex flex-col gap-2 items-center justify-center'>
-                        <CircularProgress />
-                    </div>
-                
+                    <div className='h-full w-full flex justify-center items-center'><Loading message={'Please wait, we are grading your submission'}/></div>
                  : 
                     submissionStatus.error ? <div className='h-full flex flex-col gap-2 items-center justify-center text-orange-400'>
                         <div
@@ -187,7 +195,20 @@ function Playground({theme, challenge}) {
                             className='text-black bg-slate-200 hover:bg-green-400 hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap'
                         >Close</div>
                     </div> : 
-                    submissionStatus.data ? <>Success!!</> : 
+                    submissionStatus.data ? <div className='h-full flex flex-col justify-center items-center'>
+                    <p>{getSuccessMessage(submissionStatus.data)}</p>
+                    <div
+                            onClick={() => {
+                                setSubmissionStatus({
+                                    error: null,
+                                    data: null,
+                                    isLoading: false,
+                                })
+                            }}
+
+                            className='text-black bg-slate-200 hover:bg-green-400 hover:text-white font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-lg px-4 py-1 cursor-pointer whitespace-nowrap'
+                        >Close</div>
+                    </div> : 
                     <>
                         <div className='flex h-10 items-center space-x-6'>
 						<div className='relative flex h-full flex-col justify-center cursor-pointer'>

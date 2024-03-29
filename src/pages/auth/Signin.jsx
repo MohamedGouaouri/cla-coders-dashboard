@@ -32,7 +32,6 @@ const SigninPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission, e.g., send data to server
-    console.log('Form submitted:', formData);
     setStatus({
       error: null,
       isLoading: true,
@@ -42,7 +41,7 @@ const SigninPage = () => {
       const loginResult = await login(formData)
       if(loginResult.error) {
         return setStatus({
-          error: loginResult.error?.data?.message,
+          error: loginResult.error?.data?.message || 'Error happened while signin',
           isLoading: false,
         })
       }
@@ -65,6 +64,7 @@ const SigninPage = () => {
         navigate('/')
       }
     } catch(error) {
+      
       return setStatus({
         error: error.message,
         isLoading: false,
@@ -114,7 +114,7 @@ const SigninPage = () => {
           </button>
           <div className='text-black'>New to CodeCLA. <Link to={"/signup"}>Signup</Link> </div>
           {loginStatus.isLoading ? <CircularProgress />: <></>}
-          {loginStatus.error ? <span className='text-red-500'>Error while signing in: {`${loginStatus.error}`}</span> : <></>}
+          {loginStatus.error ? <span className='text-red-500'>{`${loginStatus.error}`}</span> : <></>}
         </form>
       </div>
     </div>
