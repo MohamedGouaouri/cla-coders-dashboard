@@ -2,7 +2,7 @@ import { useState } from 'react';
 import codeImage from '../../assets/coding.png'
 import { Link } from 'react-router-dom';
 import { useSignupMutation } from '../../api/auth.api';
-import CircularProgress from '@mui/material/CircularProgress';
+import Loading from '../../components/Loading';
 
 const SignupPage = () => {
   const [signup] = useSignupMutation()
@@ -41,7 +41,7 @@ const SignupPage = () => {
       if(signupResult.error) {
         console.log(signupResult.error)
         return setStatus({
-          error: signupResult.error,
+          error: signupResult.error?.data?.message || 'Error while registering a new user',
           isLoading: false,
         })
       }
@@ -55,7 +55,7 @@ const SignupPage = () => {
     } catch(error) {
       console.log(error)
       return setStatus({
-        error: error,
+        error: 'Error while registering a new user',
         isLoading: false,
         success: null,
       })
@@ -125,8 +125,8 @@ const SignupPage = () => {
             Sign Up
           </button>
           <div className='text-black'>Already have an account?. <Link to='/login' className='text-textPrimary'>Login</Link> </div>
-          {signupStatus.isLoading ? <CircularProgress />: <></>}
-          {signupStatus.error ? <span className='text-red-500'>Error while signing up: {`${signupStatus.error?.data?.message}`}</span> : <></>}
+          {signupStatus.isLoading ? <Loading />: <></>}
+          {signupStatus.error ? <span className='text-red-500'>{`${signupStatus.error}`}</span> : <></>}
           {signupStatus.success ? <span className='text-green-500'>Signup success</span> : <></>}
         </form>
       </div>
