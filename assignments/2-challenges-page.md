@@ -8,11 +8,11 @@ the top 4 ranked coders.
 ## Tasks
 Here's the set of tasks to develop the UI for home page
 
-### 1) Implement components
+### 1. Implement components
 1. Implement the `Navbar` component:
-    - Create a functional component named Navbar.
-    - Use JSX to structure the Navbar layout with links to different sections of the application.
-    - Add dropdown functionality for user profile options (It opens up when we click on user profile picture).
+    - Create a functional component named `Navbar`.
+    - The `Navbar` should contain, the logo, the `challenges`, `leaderboard` links on the left and the profile avatar, the user and theme toggle on the right.
+    - Add dropdown functionality for user profile options (It opens up when we click on user profile avatar).
 
 ![Navbar1](./images/nav.png)
 
@@ -84,36 +84,35 @@ Here's the set of tasks to develop the UI for home page
         [
             {
                 "category": "Graphs",
-                "n_submissions": 100,
+                "count": 100,
             },
             {
                 "category": "Stacks",
-                "n_submissions": 45,
+                "count": 45,
             },
             {
                 "category": "Algorthims",
-                "n_submissions": 20,
+                "count": 20,
             },
             {
                 "category": "Databases",
-                "n_submissions": 3,
+                "count": 3,
             },
         ]
     ```
 
 ![Trends](./images/trends.png)
 
-- Implement the TopKCodersList component:
+- Implement the `TopKCodersList` component:
     - Create a functional component named TopKCodersList.
     - Use dummy data to populate the top coders list. Here's a sample data
     ```json
         [{
             "id": 101,
-            "firstName": "Alice",
-            "lastName": "Johnson",
-            "avatarUrl": "",
+            "first_name": "Alice",
+            "last_name": "Johnson",
+            "avatar_url": "",
             "score": 350,
-            "rank": 1
         },
         {
             "id": 102,
@@ -121,8 +120,6 @@ Here's the set of tasks to develop the UI for home page
             "lastName": "Smith",
             "avatarUrl": "",
             "score": 320,
-            "rank": 2
-
         },
         {
             "id": 103,
@@ -130,7 +127,6 @@ Here's the set of tasks to develop the UI for home page
             "lastName": "Davis",
             "avatarUrl": "",
             "score": 290,
-            "rank": 3
         },
         {
             "id": 104,
@@ -138,7 +134,6 @@ Here's the set of tasks to develop the UI for home page
             "lastName": "Brown",
             "avatarUrl": "",
             "score": 270,
-            "rank": 4
         }
     ]
     ```
@@ -147,8 +142,25 @@ Here's the set of tasks to develop the UI for home page
 
 ![Topk](./images/topk.png)
 
-### 2) Update the router
-As a last step, make sure to layout these components in a page component named `Home`, which is the index page for the app. We can access via two links paths: `/` and `/challenges`.
+### 2. Update the router
+As a last step, make sure to layout these components in a page component named `Home`, which is the index page for the app. We can access it via two links paths: `/` and `/challenges`.
 
+
+### 3. Theme toggle
+Next, you are asked to implement theme toggler feature.
+
+There are two options to implement it, either using the `context API` or `redux`. In this assignment you are going to use `redux` to implement it.
+
+- Add a slice for theme in your redux store configuration.
+- The initial state should be a value that indicates whether the application is in `light` or `dark` mode.
+- Add the action reducer to toggle the theme.
+- Add a toggle component to your navbar, you can make use of [react theme toggle](https://toggles.dev/docs/react) library and attach a handler that dispatches the toggle action on click events.
+- For the dark theme color, you can use the colors mentioned in the introduction.
+
+**Dark UI for home page**
+![home-page-dark](./images/home-dark.png)
+
+
+>Optional: As an optional task, figure out a way to store the theme configuration in the browser, so that when the user closes the tab or his browser the theme is initialized with his last configured theme.
 
 Happy coding! :)

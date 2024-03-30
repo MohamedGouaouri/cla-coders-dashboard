@@ -21,7 +21,7 @@ const isLight = theme == 'light'
     dispatch(logoutAction())
     navigate('/signin')
   }
-  return <div className={clsx(!isLight ? 'dark':'', "navbar text-black bg-slate-200 shadow-md dark:bg-bgNavDark dark:text-white")}>
+  return <div className={clsx(!isLight ? 'dark':'', "navbar flex justify-center text-black bg-slate-200 shadow-md dark:bg-bgNavDark dark:text-white")}>
     <div className="flex-1">
       <Link to={"/"} className="btn btn-ghost text-xl"><img  src={Logo} height={32} width={32}/> CodeCla</Link>
       <Link to={"/challenges"} className="btn btn-ghost text-xl">Challenges</Link>
@@ -45,6 +45,7 @@ const isLight = theme == 'light'
           <li><Link onClick={handleLogout}>Logout</Link></li>
         </ul>
       </div>
+      <div>{coder.first_name} {coder.last_name}</div>
       <Classic toggled={!isLight} toggle={handleThemeToggle} duration={750}/>
     </div>
   </div>

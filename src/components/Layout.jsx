@@ -1,4 +1,4 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
 import { Navbar } from './Navbar';
 import { useGetProfileQuery } from '../api/coders.api';
 import useAuth from '../hooks/useAuth';
