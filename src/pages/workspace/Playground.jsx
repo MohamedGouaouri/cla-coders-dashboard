@@ -32,12 +32,12 @@ function Playground({theme, challenge, refetch}) {
 
   const [submit] = useSumbitMutation()
   const getChallengeCodeText = (language) => {
-      let code_text = challenge.code.code_text
-      let code
+      let code = challenge.code
+      console.log(challenge.submission)
       if(challenge.submission && challenge.submission.code.language == language) {
         code = challenge.submission.code
     }else {
-        code = code_text.find((text) => text.language === language)
+        code = code.code_text.find((text) => text.language === language)
     }
     if (!code) return ''
     return code.text

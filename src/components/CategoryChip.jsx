@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 
-import { challengesApi, useGetCategoriesQuery } from "../api/challenges.api";
+import { challengesApi } from "../api/challenges.api";
 import useAuth from "../hooks/useAuth";
 import {useDispatch, useSelector} from 'react-redux'
 import { selectCategoryAction } from "../redux/slices/ui.slice";
 import clsx from "clsx";
+import { useGetCategoriesGqlQuery } from "../api/graphql/api";
 
 export const TrendingCategoryChip = ({category, n_submissions}) => {
 
@@ -37,14 +38,14 @@ export const CategoryChip = ({ label }) => {
 
 export const CategoriesList = () => {
     const {token} = useAuth()
-    let {data, isSuccess, isLoading, isError} = useGetCategoriesQuery(token)
-
+    let {data, isSuccess, isLoading, isError} = useGetCategoriesGqlQuery(token)
+    console.log(data)
     return (
         <div className="flex max-w-screen-md py-5 my-2 overflow-scroll whitespace-nowrap">
             {isLoading ? <>Loading</> : isSuccess ? <>
                 <CategoryChip label={'All'} />
                 {
-                    data && data.data.map((cat, index) => (
+                    data && data.categories.map((cat, index) => (
                         <CategoryChip key={index} label={cat} />
                         ))
                 }

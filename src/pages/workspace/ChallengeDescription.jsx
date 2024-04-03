@@ -21,7 +21,7 @@ function ChallengeDescription({theme, challenge}) {
             </Tooltip>
           </div>
         </div>
-        <MarkdownPreview source={challenge.description.trim()} style={
+        <MarkdownPreview source={challenge.description?.trim()} style={
           {
             textAlign: 'start', 
             padding: 16, 

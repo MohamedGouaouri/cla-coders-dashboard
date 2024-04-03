@@ -6,19 +6,20 @@ import { FaRegHourglass } from "react-icons/fa";
 
 import Tooltip from '@mui/material/Tooltip';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useGetChallengesQuery } from "../api/challenges.api";
 import clsx from "clsx";
 import useAuth from "../hooks/useAuth";
 import {useSelector} from 'react-redux';
+import { useGetChallengesGqlQuery } from "../api/graphql/api";
 
 export const ChallengesList = ({theme}) => {
     const isDark = theme != 'light'
     const {token} = useAuth()
     const selectedCategory = useSelector(state => state.ui.selectedCategory)
-    let {data, isLoading, isSuccess} = useGetChallengesQuery({
+    let {data, isLoading, isSuccess} = useGetChallengesGqlQuery({
         token, 
         selectedCategory
     })
+    console.log(data)
     
     return (
         <div className={clsx(isDark ? 'dark': '', "text-black overflow-scroll shadow-md bg-inherit rounded-lg p-4 text-inherit dark:bg-bgCardDark dark:text-white")}>
@@ -41,7 +42,7 @@ export const ChallengesList = ({theme}) => {
                         </td>
                     </tr>
                     : isSuccess ? 
-                    data.data.map((challenge, idx) => {
+                    data.challenges.map((challenge, idx) => {
                         const difficultyBadgeStyle = clsx('badge', challenge.level == 'Easy' ? 'badge-success' : challenge.level == 'Moderate' ? 'badge-warning': 'badge-error')
                         return <tr 
                                 key={challenge.id || idx}

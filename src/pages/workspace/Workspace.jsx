@@ -3,16 +3,16 @@ import Split from 'react-split'
 import ChallengeDescription from './ChallengeDescription'
 import Playground from './Playground'
 import { useParams } from 'react-router-dom';
-import { useGetChallengeByIdQuery } from '../../api/challenges.api';
 import {useSelector } from 'react-redux'
 import clsx from 'clsx';
 import useAuth from '../../hooks/useAuth';
+import { useGetChallengeByIdGqlQuery } from '../../api/graphql/api';
 
 
 function Workspace() {
   const {id} = useParams()
   const {token} = useAuth()
-  const {data, isLoading, isSuccess, refetch} = useGetChallengeByIdQuery({token, id})
+  const {data, isLoading, isSuccess, refetch} = useGetChallengeByIdGqlQuery({token, id})
   const theme = useSelector(state => {
         return state.ui.theme
     })
@@ -31,8 +31,8 @@ function Workspace() {
                         cursor="col-resize"
                         className={clsx(isDark ? 'dark':'', 'split text-black dark:text-white')}
                     >
-                        <ChallengeDescription theme={theme} challenge={data.data} />
-                        <Playground challenge={data.data} theme={theme} refetch={refetch}/>
+                        <ChallengeDescription theme={theme} challenge={data.challenge} />
+                        <Playground challenge={data.challenge} theme={theme} refetch={refetch}/>
                         
                     </Split> : <>Error while loading challenge workspace</>
                     }
