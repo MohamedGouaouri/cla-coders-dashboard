@@ -12,7 +12,6 @@ export default {
       colors: {
         bgNavLight: '',
         bgNavDark: '#23155B',
-        bgMainLight: '#23155B',
         bgMainDark: '#4322c9a3',
         bgCardDark: '#4322c9',
         bgUserDark: '#6a45ff',
