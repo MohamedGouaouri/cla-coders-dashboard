@@ -7,17 +7,14 @@ import { FaRegHourglass } from "react-icons/fa";
 import Tooltip from '@mui/material/Tooltip';
 import CircularProgress from '@mui/material/CircularProgress';
 import clsx from "clsx";
-import useAuth from "../hooks/useAuth";
 import {useSelector} from 'react-redux';
 import { useGetChallengesGqlQuery } from "../api/graphql/api";
 
 export const ChallengesList = ({theme}) => {
     const isDark = theme != 'light'
-    const {token} = useAuth()
     const selectedCategory = useSelector(state => state.ui.selectedCategory)
     let {data, isLoading, isSuccess} = useGetChallengesGqlQuery({
-        token, 
-        selectedCategory
+        category: selectedCategory
     })
     console.log(data)
     

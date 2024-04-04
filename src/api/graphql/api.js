@@ -6,10 +6,18 @@ export const gqlApi = createApi({
   reducerPath: 'api',
   baseQuery: graphqlRequestBaseQuery({
     url: 'http://localhost:3000/graphql/',
+    prepareHeaders: (headers, {getState}) => {
+        // retrieve token from redux store
+        const token = getState().auth?.token;
+        if (token) {
+            headers.set('authorization', `Bearer ${token}`)
+        } 
+        return headers
+    }
   }),
   endpoints: (builder) => ({
     getCategoriesGql: builder.query({
-        query: ({token}) => ({
+        query: () => ({
             document: gql`
                 query {
                     categories
@@ -18,10 +26,10 @@ export const gqlApi = createApi({
         })
     }),
     getChallengesGql: builder.query({
-        query: ({token}) => ({
+        query: ({category}) => ({
             document: gql`
                 query {
-                    challenges(token: "${token}") {
+                    challenges(category: "${category}") {
                         _id
                         status
                         title
@@ -35,10 +43,10 @@ export const gqlApi = createApi({
         
     }),
     getChallengeByIdGql: builder.query({
-        query: ({token, id}) => ({
+        query: ({id}) => ({
             document: gql`
                 query {
-                    challenge(token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmU5MDMzM2UzMDkwNzlhMTk1N2NkYyIsInJvbGUiOiJjb2RlciIsImlhdCI6MTcxMjE1Mzc3OCwiZXhwIjoxNzEyMTg5Nzc4fQ.abE2H1GNdpn_Z6UgTnNjNYIpgIhV9Rscf97KQOa2pU4", id: "65feaac34c7c0fa50a47fb3e") {
+                    challenge(id: "${id}") {
                         status
                         title
                         description

@@ -5,14 +5,12 @@ import Playground from './Playground'
 import { useParams } from 'react-router-dom';
 import {useSelector } from 'react-redux'
 import clsx from 'clsx';
-import useAuth from '../../hooks/useAuth';
 import { useGetChallengeByIdGqlQuery } from '../../api/graphql/api';
 
 
 function Workspace() {
   const {id} = useParams()
-  const {token} = useAuth()
-  const {data, isLoading, isSuccess, refetch} = useGetChallengeByIdGqlQuery({token, id})
+  const {data, isLoading, isSuccess, refetch} = useGetChallengeByIdGqlQuery({id})
   const theme = useSelector(state => {
         return state.ui.theme
     })
